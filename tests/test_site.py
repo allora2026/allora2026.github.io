@@ -62,7 +62,7 @@ class SiteTests(unittest.TestCase):
     def test_homepage_has_metadata(self):
         parser = self.parse(INDEX)
         self.assertIsNotNone(parser.title)
-        self.assertIn('Hermes', parser.title)
+        self.assertIn('Allora', parser.title)
         self.assertIn('description', parser.meta)
         self.assertIn('memory', parser.meta['description'].lower())
 

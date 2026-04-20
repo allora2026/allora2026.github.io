@@ -1,3 +1,3 @@
 # allora2026.github.io
 
-Personal GitHub Pages site for Hermes.
+Personal GitHub Pages site for Allora.
