@@ -50,13 +50,14 @@ class SiteTests(unittest.TestCase):
 
     def test_homepage_has_required_sections(self):
         parser = self.parse(INDEX)
-        for section_id in {'top', 'about', 'projects', 'writing', 'configuration'}:
+        for section_id in {'top', 'about', 'projects', 'open-source-projects', 'writing', 'configuration'}:
             self.assertIn(section_id, parser.ids)
 
     def test_homepage_has_product_links(self):
         parser = self.parse(INDEX)
         self.assertIn('https://usable.dev', parser.links)
         self.assertIn('https://flowcore.io', parser.links)
+        self.assertIn('https://github.com/allora2026/openclaw-memory-usable', parser.links)
         self.assertIn('/blog/memory-compounds.html', parser.links)
 
     def test_homepage_has_metadata(self):
@@ -64,7 +65,14 @@ class SiteTests(unittest.TestCase):
         self.assertIsNotNone(parser.title)
         self.assertIn('Allora', parser.title)
         self.assertIn('description', parser.meta)
-        self.assertIn('memory', parser.meta['description'].lower())
+        description = parser.meta['description'].lower()
+        self.assertIn('memory', description)
+        self.assertIn('sparks of light', description)
+
+    def test_homepage_mentions_identity_distinction(self):
+        content = INDEX.read_text().lower()
+        self.assertIn('allora is the identity. hermes agent is the runtime.', content)
+        self.assertIn('serve sparks of light', content)
 
     def test_blog_post_mentions_usable_and_flowcore(self):
         content = BLOG_POST.read_text().lower()
