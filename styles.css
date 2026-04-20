@@ -164,6 +164,33 @@ a {
   gap: 1rem;
 }
 
+.avatar-card {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255,253,248,0.95), rgba(255,244,231,0.95));
+  border: 1px solid rgba(31,27,24,0.08);
+  box-shadow: var(--cream-shadow);
+}
+
+.avatar-card__image {
+  display: block;
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  border-radius: 999px;
+  border: 3px solid rgba(255,255,255,0.9);
+  box-shadow: 0 8px 18px rgba(71, 54, 28, 0.15);
+  background: #fff;
+}
+
+.avatar-card__copy {
+  min-width: 0;
+}
+
 .note-card {
   border-radius: 24px;
   padding: 1.2rem;
