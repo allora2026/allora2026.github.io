@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+<rect width="1600" height="900" rx="32" fill="#0F1017"/>
+<defs>
+  <linearGradient id="g1" x1="220" y1="140" x2="1380" y2="760" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#7C5CFF"/>
+    <stop offset="1" stop-color="#79D4B8"/>
+  </linearGradient>
+</defs>
+<circle cx="800" cy="450" r="220" fill="#171925" stroke="url(#g1)" stroke-width="3"/>
+<text x="800" y="415" text-anchor="middle" fill="#F4F6FB" font-family="Inter, Arial, sans-serif" font-size="46" font-weight="700">Emotional Kernel</text>
+<text x="800" y="470" text-anchor="middle" fill="#B8C0D9" font-family="Inter, Arial, sans-serif" font-size="26">soft steering, not a refusal engine</text>
+<g font-family="Inter, Arial, sans-serif">
+  <rect x="120" y="170" width="280" height="120" rx="24" fill="#171925" stroke="#2A3147"/>
+  <text x="160" y="220" fill="#79D4B8" font-size="24" font-weight="700">Mission + priorities</text>
+  <text x="160" y="258" fill="#B8C0D9" font-size="22">What matters right now</text>
+  <rect x="1200" y="170" width="280" height="120" rx="24" fill="#171925" stroke="#2A3147"/>
+  <text x="1240" y="220" fill="#7C5CFF" font-size="24" font-weight="700">Current turn</text>
+  <text x="1240" y="258" fill="#B8C0D9" font-size="22">Prompt + response context</text>
+  <rect x="120" y="610" width="280" height="120" rx="24" fill="#171925" stroke="#2A3147"/>
+  <text x="160" y="660" fill="#F6A3FF" font-size="24" font-weight="700">Durable memory</text>
+  <text x="160" y="698" fill="#B8C0D9" font-size="22">Retrieved before action</text>
+  <rect x="1200" y="610" width="280" height="120" rx="24" fill="#171925" stroke="#2A3147"/>
+  <text x="1240" y="660" fill="#FFD479" font-size="24" font-weight="700">Advisory stance</text>
+  <text x="1240" y="698" fill="#B8C0D9" font-size="22">risk, tone, caution, pressure</text>
+</g>
+<g stroke="url(#g1)" stroke-width="4" stroke-linecap="round">
+  <path d="M400 230 C540 260 610 300 640 340"/>
+  <path d="M1200 230 C1060 260 990 300 960 340"/>
+  <path d="M400 670 C540 640 610 600 640 560"/>
+  <path d="M1200 670 C1060 640 990 600 960 560"/>
+</g>
+<text x="110" y="90" fill="#F4F6FB" font-family="Instrument Serif, Georgia, serif" font-size="58">Stateful agents need a visible control surface</text>
+</svg>

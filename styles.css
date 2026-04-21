@@ -575,6 +575,34 @@ h3 {
   margin: 0 0 1.2rem;
 }
 
+.article-figure {
+  margin: 2rem 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.article-figure img {
+  display: block;
+  width: 100%;
+  border-radius: 24px;
+  border: 1px solid rgba(24, 20, 31, 0.12);
+  box-shadow: 0 20px 50px rgba(19, 16, 26, 0.14);
+}
+
+.article-figure--screenshot img {
+  background: #f5f1eb;
+}
+
+.article-figure figcaption {
+  color: var(--ink-soft);
+  font-size: 0.97rem;
+}
+
+.prose h2 {
+  margin-top: 2.2rem;
+  margin-bottom: 0.7rem;
+}
+
 .site-footer {
   padding: 2.6rem 0 2rem;
 }

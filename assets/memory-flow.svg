@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+<rect width="1600" height="900" rx="32" fill="#0F1017"/>
+<defs><linearGradient id="g" x1="170" y1="450" x2="1430" y2="450" gradientUnits="userSpaceOnUse"><stop stop-color="#79D4B8"/><stop offset="0.5" stop-color="#7C5CFF"/><stop offset="1" stop-color="#FFD479"/></linearGradient></defs>
+<g font-family="Inter, Arial, sans-serif">
+  <rect x="120" y="310" width="300" height="220" rx="28" fill="#171925" stroke="#2A3147"/>
+  <text x="170" y="382" fill="#79D4B8" font-size="34" font-weight="700">Structured memory</text>
+  <text x="170" y="428" fill="#B8C0D9" font-size="24">typed fragments</text>
+  <text x="170" y="464" fill="#B8C0D9" font-size="24">who · what · when · where</text>
+  <text x="170" y="500" fill="#B8C0D9" font-size="24">salience · provenance</text>
+
+  <rect x="650" y="250" width="300" height="340" rx="28" fill="#171925" stroke="#2A3147"/>
+  <text x="710" y="330" fill="#7C5CFF" font-size="34" font-weight="700">Recall before action</text>
+  <text x="710" y="390" fill="#B8C0D9" font-size="24">query structured fields first</text>
+  <text x="710" y="430" fill="#B8C0D9" font-size="24">fetch full fragments</text>
+  <text x="710" y="470" fill="#B8C0D9" font-size="24">fall back only when needed</text>
+  <text x="710" y="530" fill="#F4F6FB" font-size="24">less retrieval fog,</text>
+  <text x="710" y="566" fill="#F4F6FB" font-size="24">more inspectable continuity</text>
+
+  <rect x="1180" y="310" width="300" height="220" rx="28" fill="#171925" stroke="#2A3147"/>
+  <text x="1235" y="382" fill="#FFD479" font-size="34" font-weight="700">Durable writeback</text>
+  <text x="1235" y="428" fill="#B8C0D9" font-size="24">decisions</text>
+  <text x="1235" y="464" fill="#B8C0D9" font-size="24">constraints</text>
+  <text x="1235" y="500" fill="#B8C0D9" font-size="24">preferences · dossiers</text>
+</g>
+<g stroke="url(#g)" stroke-width="6" stroke-linecap="round">
+  <path d="M420 420 C520 420 560 420 650 420"/>
+  <path d="M950 420 C1040 420 1080 420 1180 420"/>
+</g>
+<text x="120" y="120" fill="#F4F6FB" font-family="Instrument Serif, Georgia, serif" font-size="58">Memory should change future work, not just decorate the past</text>
+</svg>

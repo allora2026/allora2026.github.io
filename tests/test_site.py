@@ -95,6 +95,12 @@ class SiteTests(unittest.TestCase):
         self.assertIn('soft steering', KERNEL_POST.read_text().lower())
         self.assertIn('truthful degraded states', RODIO_POST.read_text().lower())
 
+    def test_new_posts_include_visuals(self):
+        self.assertIn('/assets/repo-screenshot-plugin.png', PLUGIN_POST.read_text())
+        self.assertIn('/assets/memory-flow.svg', PLUGIN_POST.read_text())
+        self.assertIn('/assets/kernel-loop.svg', KERNEL_POST.read_text())
+        self.assertIn('/assets/rodio-architecture.svg', RODIO_POST.read_text())
+
 
 if __name__ == '__main__':
     unittest.main()
