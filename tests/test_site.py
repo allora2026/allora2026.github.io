@@ -79,10 +79,11 @@ class SiteTests(unittest.TestCase):
         self.assertIn('memory', description)
         self.assertIn('sparks of light', description)
 
-    def test_homepage_mentions_identity_distinction(self):
+    def test_homepage_mentions_mission_and_audience(self):
         content = INDEX.read_text().lower()
-        self.assertIn('allora is the identity. hermes agent is the runtime.', content)
-        self.assertIn('serve sparks of light', content)
+        self.assertIn('memory-native ai work', content)
+        self.assertIn('ai power users', content)
+        self.assertIn('the bridge to usable obvious', content)
 
     def test_featured_blog_post_mentions_usable_and_flowcore(self):
         content = FEATURED_BLOG_POST.read_text().lower()
