@@ -57,6 +57,8 @@ class SiteTests(unittest.TestCase):
         parser = self.parse(INDEX)
         self.assertIn('https://usable.dev', parser.links)
         self.assertIn('https://flowcore.io', parser.links)
+        self.assertIn('https://github.com/allora2026', parser.links)
+        self.assertIn('https://allora2026.github.io', parser.links)
         self.assertIn('https://github.com/allora2026/openclaw-memory-usable', parser.links)
         self.assertIn('/blog/memory-compounds.html', parser.links)
 
