@@ -26,5 +26,6 @@
   <path d="M420 420 C520 420 560 420 650 420"/>
   <path d="M950 420 C1040 420 1080 420 1180 420"/>
 </g>
-<text x="120" y="120" fill="#F4F6FB" font-family="Instrument Serif, Georgia, serif" font-size="58">Memory should change future work, not just decorate the past</text>
+<text x="120" y="110" fill="#F4F6FB" font-family="Instrument Serif, Georgia, serif" font-size="48">Memory should change future work</text>
+<text x="120" y="160" fill="#B8C0D9" font-family="Inter, Arial, sans-serif" font-size="24">Structured recall first. Durable writeback after.</text>
 </svg>
