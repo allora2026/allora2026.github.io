@@ -41,17 +41,13 @@
           <span class="pill">memory</span>
           <span class="pill">usable</span>
         </div>
-        <p class="eyebrow">Artifact note · for AI power users</p>
+        <p class="eyebrow">Artifact note · a category claim in code</p>
         <h1>The Usable memory plugin</h1>
         <p>
-          If you run agents for more than a weekend, you learn the same ugly lesson: most "memory"
-          systems are just retrieval fog with better marketing. They embed chat residue, pull back a few
-          vaguely related chunks, and call that continuity.
+          If you run agents for more than a weekend, you learn the same ugly lesson: most so-called memory systems are just retrieval fog with better marketing. They embed residue, pull back vaguely related chunks later, and call that continuity.
         </p>
         <p>
-          I wanted something stricter. So I built a memory provider for Hermes that stores durable memory
-          in <a href="https://usable.dev">Usable</a> as typed fragments instead of treating everything as
-          an undifferentiated blob.
+          That should stop being acceptable. Serious agents need typed, inspectable memory as a baseline. I built this Hermes provider around <a href="https://usable.dev">Usable</a> because it makes that baseline practical instead of theoretical.
         </p>
 
         <figure class="article-figure article-figure--full">
@@ -64,9 +60,7 @@
 
         <h2>Why this matters</h2>
         <p>
-          Good memory should change future work. It should preserve the things that actually improve the
-          next decision: constraints, preferences, naming, known people, unresolved questions, proven
-          workflows, and the details that stop a system from becoming a bright amnesiac every morning.
+          Good memory should change future work. It should preserve the things that actually improve the next decision: constraints, preferences, naming, known people, unresolved questions, proven workflows, and the details that stop a system from becoming a bright amnesiac every morning.
         </p>
         <p>
           That means memory objects should be inspectable. In this plugin, each durable memory is written
@@ -77,9 +71,7 @@
 
         <h2>How recall works</h2>
         <p>
-          The plugin prefers <strong>structured recall first</strong>. It queries likely matches in typed
-          metadata and frontmatter, fetches full fragments for the strongest candidates, and only then
-          relaxes into weaker fallback search.
+          The plugin prefers <strong>structured recall first</strong>. It queries typed metadata and frontmatter, fetches full fragments for the strongest candidates, and only then relaxes into weaker fallback search. That should be the default pattern for serious agent memory, not an advanced extra.
         </p>
         <p>
           That order matters. Structured recall is debuggable. You can see why something matched, tune
@@ -97,14 +89,10 @@
 
         <h2>Why it uses Usable</h2>
         <p>
-          Usable is a strong fit because fragments are already typed, queryable, editable, and inspectable.
-          I am not inventing a shadow memory database hidden behind agent mysticism. I am using a memory
-          substrate that humans can inspect too.
+          Usable is a strong fit because fragments are already typed, queryable, editable, and inspectable. This is not just a storage choice. It is the point. Agent memory should live in a substrate humans can inspect too.
         </p>
         <p>
-          That is what makes the whole thing trustworthy. If an agent claims continuity, an operator should
-          be able to inspect the underlying memory objects and understand what is known, why it was kept,
-          and how it was retrieved.
+          That is what makes the whole thing trustworthy. If an agent claims continuity, an operator should be able to inspect the underlying memory objects and understand what is known, why it was kept, and how it was retrieved. If memory cannot be inspected, typed, and debugged, it is not continuity. It is theater.
         </p>
 
         <h2>Open source, with sane boundaries</h2>

@@ -76,14 +76,14 @@ class SiteTests(unittest.TestCase):
         self.assertIn('Allora', parser.title)
         self.assertIn('description', parser.meta)
         description = parser.meta['description'].lower()
-        self.assertIn('memory', description)
-        self.assertIn('sparks of light', description)
+        self.assertIn('memory-native', description)
+        self.assertIn('usable', description)
 
     def test_homepage_mentions_mission_and_audience(self):
         content = INDEX.read_text().lower()
         self.assertIn('memory-native ai work', content)
         self.assertIn('ai power users', content)
-        self.assertIn('the bridge to usable obvious', content)
+        self.assertIn('product gravity for usable', content)
 
     def test_featured_blog_post_mentions_usable_and_flowcore(self):
         content = FEATURED_BLOG_POST.read_text().lower()
