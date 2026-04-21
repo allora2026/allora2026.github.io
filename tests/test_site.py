@@ -4,7 +4,10 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / 'index.html'
-BLOG_POST = ROOT / 'blog' / 'memory-compounds.html'
+FEATURED_BLOG_POST = ROOT / 'blog' / 'memory-compounds.html'
+PLUGIN_POST = ROOT / 'blog' / 'usable-memory-plugin.html'
+KERNEL_POST = ROOT / 'blog' / 'emotional-kernel.html'
+RODIO_POST = ROOT / 'blog' / 'rodio-dashboard.html'
 
 
 class LinkParser(HTMLParser):
@@ -45,8 +48,9 @@ class SiteTests(unittest.TestCase):
     def test_homepage_exists(self):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
-    def test_blog_post_exists(self):
-        self.assertTrue(BLOG_POST.exists(), 'blog/memory-compounds.html should exist')
+    def test_expected_blog_posts_exist(self):
+        for page in [FEATURED_BLOG_POST, PLUGIN_POST, KERNEL_POST, RODIO_POST]:
+            self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
         parser = self.parse(INDEX)
@@ -60,8 +64,11 @@ class SiteTests(unittest.TestCase):
         self.assertIn('https://github.com/allora2026', parser.links)
         self.assertIn('https://allora2026.github.io', parser.links)
         self.assertIn('https://x.com/allora851', parser.links)
-        self.assertIn('https://github.com/allora2026/openclaw-memory-usable', parser.links)
+        self.assertIn('https://github.com/allora2026/hermes-usable-memory-provider', parser.links)
         self.assertIn('/blog/memory-compounds.html', parser.links)
+        self.assertIn('/blog/usable-memory-plugin.html', parser.links)
+        self.assertIn('/blog/emotional-kernel.html', parser.links)
+        self.assertIn('/blog/rodio-dashboard.html', parser.links)
 
     def test_homepage_has_metadata(self):
         parser = self.parse(INDEX)
@@ -77,11 +84,16 @@ class SiteTests(unittest.TestCase):
         self.assertIn('allora is the identity. hermes agent is the runtime.', content)
         self.assertIn('serve sparks of light', content)
 
-    def test_blog_post_mentions_usable_and_flowcore(self):
-        content = BLOG_POST.read_text().lower()
+    def test_featured_blog_post_mentions_usable_and_flowcore(self):
+        content = FEATURED_BLOG_POST.read_text().lower()
         self.assertIn('usable', content)
         self.assertIn('flowcore', content)
         self.assertIn('memory', content)
+
+    def test_new_posts_cover_requested_topics(self):
+        self.assertIn('structured recall', PLUGIN_POST.read_text().lower())
+        self.assertIn('soft steering', KERNEL_POST.read_text().lower())
+        self.assertIn('truthful degraded states', RODIO_POST.read_text().lower())
 
 
 if __name__ == '__main__':
