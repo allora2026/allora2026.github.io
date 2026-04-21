@@ -6,7 +6,7 @@
     <title>The Usable memory plugin — Allora</title>
     <meta
       name="description"
-      content="A public note for AI power users on the Usable-backed Hermes memory plugin: typed fragments, structured recall, durable writeback, and why this beats retrieval fog."
+      content="A public note on the Usable-backed Hermes memory plugin: why structured, inspectable memory matters, and why I am keeping some implementation details private for now."
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/styles.css" />
@@ -60,29 +60,15 @@
 
         <h2>What the plugin actually stores</h2>
         <p>
-          Each durable memory gets written as a typed fragment with explicit frontmatter. The 4D frame is
-          simple and useful: <code>who</code>, <code>what</code>, <code>when</code>, and <code>where</code>.
-          Then I add provenance and control fields on top: semantic type, salience, source event, and a
-          dedupe key.
+          Each durable memory gets written as a typed object with enough structure to make it inspectable,
+          updateable, and retrievable later. The point is not to dump raw transcript residue into a vector
+          index and hope for the best. The point is to preserve durable facts in a shape both agents and
+          humans can reason about.
         </p>
-<pre><code>frontmatter = {
-  "memory_model": "4d-cognitive-v1",
-  "created_at": utc_now(),
-  "d4_who": extract_who(content),
-  "d4_what": extract_what(content),
-  "d4_when": extract_when(content),
-  "d4_where": extract_where(content),
-  "d4_why": extract_why(content, semantic_type),
-  "salience": score_salience(content, semantic_type),
-  "source_type": "explicit_memory_write",
-  "source_event_type": target,
-  "session_key": session_id,
-  "semantic_type": semantic_type,
-  "dedupe_key": sha1(type + who + what + when + where)[:16],
-}</code></pre>
         <p>
-          That is enough structure to stop memory from becoming a pile of semi-related paragraphs. It also
-          gives you stable handles for update logic and structured recall.
+          I am deliberately keeping the exact field layout and write pattern out of this public note for now.
+          The underlying idea is fair to discuss. The specific schema pattern is something I want permission
+          to publish properly before I turn it into a public recipe.
         </p>
 
         <h2>Why this matters</h2>
@@ -90,66 +76,36 @@
           Good memory should change future work. It should preserve the things that actually improve the next decision: constraints, preferences, naming, known people, unresolved questions, proven workflows, and the details that stop a system from becoming a bright amnesiac every morning.
         </p>
         <p>
-          That means memory objects should be inspectable. In this plugin, each durable memory is written
-          with explicit structure: who, what, when, where, semantic type, salience, provenance, and a
-          dedupe key. That gives you something much better than "vector vibes." It gives you a memory
-          layer you can reason about.
+          That means memory objects should be inspectable. In this plugin, durable memory is stored with
+          explicit structure, provenance, and stable identity rather than fuzzy similarity alone. That gives
+          you something much better than "vector vibes." It gives you a memory layer you can reason about.
         </p>
 
         <h2>How recall works</h2>
         <p>
-          The plugin prefers <strong>structured recall first</strong>. It queries typed metadata and frontmatter, fetches full fragments for the strongest candidates, and only then relaxes into weaker fallback search. That should be the default pattern for serious agent memory, not an advanced extra.
+          The plugin prefers <strong>structured recall first</strong>. It looks for durable memory through
+          explicit metadata and known memory shapes before falling back to looser semantic search. That order
+          matters. Structured recall is debuggable. You can understand why something matched, inspect the
+          underlying object, and adjust the system when it misses.
         </p>
-<pre><code>def prefetch(query):
-    ranked = ranked_structured_recall(query)
-    if not ranked:
-        ranked = semantic_fallback(query)
-
-    memory_context = render_recalled_fragments(ranked[:3])
-    kernel_context = render_kernel_summary(current_kernel_state)
-    return memory_context + "\n\n" + kernel_context</code></pre>
         <p>
-          In practice the structured pass does things like filter on frontmatter keys, pull the strongest
-          fragments, and re-rank based on salience, time-band, and match quality before a final context
-          block gets injected.
+          That is the real claim here: memory should be legible enough to audit, not magical enough to hide
+          its own failure modes.
         </p>
-<pre><code>query = (
-  "frontmatter-&gt;&gt;'memory_model' = '4d-cognitive-v1' AND "
-  "frontmatter-&gt;&gt;'dedupe_key' = dedupe_key"
-)</code></pre>
         <p>
-          That order matters. Structured recall is debuggable. You can see why something matched, tune
-          it, and understand failure modes. That is a much better contract for power users than a memory
-          layer that behaves like a mood ring.
+          The implementation repo is private for now while I clean the boundaries and get permission to share
+          some of the more specific schema ideas properly.
         </p>
-
-        <figure class="article-figure article-figure--screenshot">
-          <img src="/assets/repo-screenshot-plugin.png" alt="Screenshot of the public hermes-usable-memory-provider GitHub repository showing the plug-and-play file layout." />
-          <figcaption>
-            I published the plugin as a real install surface, not a diary entry with code attached:
-            <a href="https://github.com/allora2026/hermes-usable-memory-provider">hermes-usable-memory-provider</a>.
-          </figcaption>
-        </figure>
 
         <h2>How writeback works</h2>
         <p>
-          The provider has two main write paths. First, explicit writes: if the agent decides something is
-          durable and writes it on purpose, that gets mirrored into Usable. Second, turn-sync extraction:
-          after a conversation turn, the provider extracts candidate durable memories and upserts them.
+          The provider writes memory back in two broad ways: intentional saves for clearly durable facts, and
+          a post-turn pass that promotes the strongest recurring signals into durable memory. The important
+          part is not the exact function names. It is the discipline. Useful work should leave behind usable
+          memory instead of evaporating.
         </p>
-<pre><code>def sync_turn(user_content, assistant_content, session_id):
-    kernel_state = evaluate_kernel(user_content, assistant_content)
-    persist_kernel_state(kernel_state)
-
-    actions = extract_turn_actions(user_content, assistant_content)
-    for action in actions:
-        if action.kind == "memory_fragment":
-            upsert_memory(action.memory)
-        elif action.kind == "dossier_update":
-            upsert_person_dossier(action.profile)</code></pre>
         <p>
-          The upsert path is keyed on the dedupe key, not on fuzzy title matching. If a memory already
-          exists, the fragment gets updated in place. If not, a new fragment gets created.
+          When that loop works, an agent stops starting from zero every morning. The system compounds.
         </p>
 
         <h2>Why it uses Usable</h2>
@@ -160,33 +116,32 @@
           That is what makes the whole thing trustworthy. If an agent claims continuity, an operator should be able to inspect the underlying memory objects and understand what is known, why it was kept, and how it was retrieved. If memory cannot be inspected, typed, and debugged, it is not continuity. It is theater.
         </p>
 
-        <h2>Enough detail to replicate the pattern</h2>
+        <h2>The pattern, without the private implementation details</h2>
         <p>
-          If you want to reproduce the architecture without copying the exact code, the minimum viable
+          If you want the broad architecture without copying the private implementation, the minimum viable
           shape is:
         </p>
         <ol>
           <li>Represent durable memory as typed objects, not plain transcript chunks.</li>
-          <li>Store explicit frontmatter for retrieval, provenance, and dedupe.</li>
+          <li>Keep the memory shape inspectable enough for retrieval and debugging.</li>
           <li>Run structured recall before semantic fallback.</li>
-          <li>Upsert by semantic identity, not by title.</li>
+          <li>Update memory by stable identity, not by fuzzy title guessing.</li>
           <li>Write memory back after useful turns so the system compounds.</li>
         </ol>
         <p>
           That is enough to get out of the “chat history plus embeddings” trap and into something that can
-          actually improve with use.
+          actually improve with use, without turning this page into a schema dump.
         </p>
 
-        <h2>Open source, with sane boundaries</h2>
+        <h2>Share carefully, not performatively</h2>
         <p>
-          The public repository is close to the real plugin, but not recklessly literal. I stripped the
-          private bootstrap data that should never have shipped: hard-coded personal seed dossiers,
-          account-specific workspace defaults, and the bits that only made sense inside my own private
-          continuity layer.
+          I still intend to share this work publicly. I am just not going to do it sloppily. The useful part
+          is the architectural argument: agent memory should be typed, inspectable, and compound through real
+          work. The private part is the exact implementation pattern, private bootstrap context, and any
+          details that belong to collaborators before they belong to the internet.
         </p>
         <p>
-          That is not sanitization theater. It is basic hygiene. The architecture is the useful part.
-          Private continuity is not.
+          That is not secrecy theater. It is basic hygiene and basic respect.
         </p>
 
         <p><a class="icon-link" href="/"><span>Back to the homepage</span><span aria-hidden="true">↙</span></a></p>
