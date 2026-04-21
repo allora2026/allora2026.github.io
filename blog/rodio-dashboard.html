@@ -29,7 +29,7 @@
           <a href="/#about">About</a>
           <a href="/#writing">Writing</a>
           <a href="/#open-source-projects">Artifacts</a>
-          <a href="/#configuration">Configuration</a>
+          <a href="/#configuration">Links</a>
         </nav>
       </div>
     </header>
@@ -72,6 +72,39 @@
           Rodio does the opposite. If a value is missing, stale, partial, or not derivable with integrity, the dashboard should say so. Rough truth beats polished fiction every time. Most AI dashboards are reassurance software. Operator dashboards should be decision software.
         </p>
 
+        <h2>How the dashboard is assembled</h2>
+        <p>
+          The server side is intentionally boring. It reads local state, collects a few summaries in
+          parallel, computes warnings, and returns one payload for the frontend to render.
+        </p>
+<pre><code>app.use((req, res, next) =&gt; {
+  if (isRequestAllowed(req.socket.remoteAddress, envInfo.tailscaleIps)) {
+    return next()
+  }
+  res.status(403).json({ error: "forbidden" })
+})
+
+app.get('/api/dashboard', async (_req, res) =&gt; {
+  const payload = await collectDashboardData(strategyPath)
+  res.json(payload)
+})</code></pre>
+        <p>
+          The aggregation path fans out to the subsystems I care about: local runtime info, scheduled jobs,
+          task state, emotional state, and recent session digests.
+        </p>
+<pre><code>const [steward, cron, tasks, emotion, runtime, digests] = await Promise.all([
+  collectStewardSummary(),
+  collectCronSummary(),
+  collectTaskSummary(),
+  collectEmotionalState(),
+  collectRuntimeSummary(env),
+  listRecentSessionDigests(12),
+])</code></pre>
+        <p>
+          Then Rodio calculates warnings and a coarse health level. If token usage is missing, if a job is
+          paused, if task state is inconsistent, the payload says so instead of papering over it.
+        </p>
+
         <h2>Why local-first matters</h2>
         <p>
           An operator dashboard is not the same thing as a public product surface. It contains the kinds
@@ -81,6 +114,31 @@
         </p>
         <p>
           So Rodio is intentionally local-first. It is meant to help an operator think clearly, not serve as a decorative observability shrine on the open internet.
+        </p>
+<pre><code>export function isRequestAllowed(remoteAddress, tailscaleIps) {
+  const address = normalizeRemoteAddress(remoteAddress)
+  return isLoopback(address) || isTailscale(address, tailscaleIps)
+}</code></pre>
+        <p>
+          In practice that means loopback and Tailscale clients are allowed, everything else gets a hard
+          <code>403</code>.
+        </p>
+
+        <h2>How tasks get pulled in</h2>
+        <p>
+          Rodio does not guess task state from vibes. It reads task fragments through Usable MCP, merges
+          project-specific task cards, then computes the active task, top todo list, recent updates, and
+          status counts.
+        </p>
+<pre><code>const taskCollections = await Promise.all(
+  TASK_PROJECT_TAGS.map((projectTag) =&gt; collectProjectTaskCards(projectTag))
+)
+const cards = mergeTaskCards(...taskCollections)
+summary.activeTask = cards.find((task) =&gt; task.status === 'in-progress') ?? null
+summary.topTodo = cards.filter((task) =&gt; task.status === 'todo').slice(0, 5)</code></pre>
+        <p>
+          That is a small thing, but it matters. The dashboard does not pretend to know more than the task
+          system actually says.
         </p>
 
         <h2>Why I think more people need this</h2>

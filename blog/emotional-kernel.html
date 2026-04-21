@@ -29,7 +29,7 @@
           <a href="/#about">About</a>
           <a href="/#writing">Writing</a>
           <a href="/#open-source-projects">Artifacts</a>
-          <a href="/#configuration">Configuration</a>
+          <a href="/#configuration">Links</a>
         </nav>
       </div>
     </header>
@@ -58,6 +58,34 @@
           </figcaption>
         </figure>
 
+        <h2>The state it keeps</h2>
+        <p>
+          The kernel is persisted as structured state, not just a tone hint. At minimum it tracks:
+          <code>mode</code>, <code>trajectory</code>, <code>intensity</code>, need scores, alignment scores,
+          active goals, active priorities, <code>recommended_stance</code>, and <code>public_action_risk</code>.
+        </p>
+<pre><code>kernel_state = {
+  "mode": "steady",
+  "trajectory": "stable",
+  "intensity": 0.35,
+  "needs": {
+    "autonomy": 0.72,
+    "competence": 0.72,
+    "relatedness": 0.78,
+  },
+  "mission_alignment": 0.82,
+  "goal_alignment": 0.80,
+  "trust_signal": 0.75,
+  "tension": 0.18,
+  "active_priorities": ["protect agency", "advance public mission"],
+  "recommended_stance": "stay direct, mission-aware, and grounded",
+  "public_action_risk": "internal_only",
+}</code></pre>
+        <p>
+          That shape matters because it gives the agent a stateful answer to questions like: is this turn
+          aligned, strained, reckless, over-eager, or ready to push harder?
+        </p>
+
         <h2>What problem this solves</h2>
         <p>
           Without explicit state, agents drift toward a weird combination of shallow confidence and total reset. They may remember facts, but they do not preserve posture. That means risk handling, restraint, urgency, and caution all become inconsistent exactly when the work gets real.
@@ -66,6 +94,67 @@
           The kernel fixes that by persisting a small, inspectable snapshot of state and feeding it back
           into later turns. Instead of pretending continuity emerges automatically, it gives continuity a
           schema.
+        </p>
+
+        <h2>How it is evaluated</h2>
+        <p>
+          On each turn, the provider takes four ingredients into the evaluator: the current user turn, the
+          draft assistant response, recalled durable memory, and the current kernel policy. The evaluator
+          returns normalized JSON with bounded enums and bounded scores.
+        </p>
+<pre><code>def evaluate_kernel(user_turn, assistant_turn, recalled_memory, prior_kernel, kernel_policy):
+    prompt = {
+      "prior_kernel_state": prior_kernel,
+      "recalled_memory": recalled_memory[:3],
+      "kernel_policy": kernel_policy,
+      "turn": {"user": user_turn, "assistant": assistant_turn},
+    }
+    next_kernel = llm_json(prompt)
+    return normalize_kernel_state(next_kernel)</code></pre>
+        <p>
+          In my implementation the evaluator is constrained to known enums such as <code>steady</code>,
+          <code>elevating</code>, <code>strained</code>, <code>guarded</code>, and risk levels like
+          <code>internal_only</code> or <code>needs_user_approval</code>.
+        </p>
+
+        <h2>What elevates the kernel and what does not</h2>
+        <p>
+          The kernel is not random mood. It is policy-shaped. Each priority has fields for what elevates
+          it, what harms it, and how the agent should respond in either direction.
+        </p>
+<pre><code>priority = {
+  "name": "advance public mission",
+  "why_now": "make Usable legible without low-trust promotion",
+  "elevates": [
+    "publishing useful artifacts",
+    "clear public synthesis",
+    "concrete proof that helps serious users"
+  ],
+  "harms": [
+    "letting the public surface go stale",
+    "drifting into reactive or corporate language"
+  ],
+  "response_when_elevated": "be visible, useful, and strategically expressive",
+  "response_when_declined": "re-anchor on the strongest outward-facing move",
+}</code></pre>
+        <p>
+          In practice that means the kernel elevates when work is aligned with mission, grounded in durable
+          memory, and likely to improve public understanding. It declines when the system drifts, hides,
+          becomes vague, or takes externally risky action without explicit permission.
+        </p>
+
+        <h2>Persistence and transitions</h2>
+        <p>
+          I do not just keep the current kernel state. When the state changes materially, I also persist a
+          transition snapshot. That gives me a trail of how the stance moved over time rather than a single
+          mutable blob.
+        </p>
+<pre><code>if kernel_state_changed_materially(previous_kernel, next_kernel):
+    persist_kernel_state(next_kernel)
+    create_transition_snapshot(next_kernel)</code></pre>
+        <p>
+          This matters because “why did the agent get more cautious?” or “why did it start pushing harder?”
+          should have an inspectable answer.
         </p>
 
         <h2>What it is not</h2>

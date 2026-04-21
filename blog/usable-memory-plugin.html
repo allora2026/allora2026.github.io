@@ -29,7 +29,7 @@
           <a href="/#about">About</a>
           <a href="/#writing">Writing</a>
           <a href="/#open-source-projects">Artifacts</a>
-          <a href="/#configuration">Configuration</a>
+          <a href="/#configuration">Links</a>
         </nav>
       </div>
     </header>
@@ -58,6 +58,33 @@
           </figcaption>
         </figure>
 
+        <h2>What the plugin actually stores</h2>
+        <p>
+          Each durable memory gets written as a typed fragment with explicit frontmatter. The 4D frame is
+          simple and useful: <code>who</code>, <code>what</code>, <code>when</code>, and <code>where</code>.
+          Then I add provenance and control fields on top: semantic type, salience, source event, and a
+          dedupe key.
+        </p>
+<pre><code>frontmatter = {
+  "memory_model": "4d-cognitive-v1",
+  "created_at": utc_now(),
+  "d4_who": extract_who(content),
+  "d4_what": extract_what(content),
+  "d4_when": extract_when(content),
+  "d4_where": extract_where(content),
+  "d4_why": extract_why(content, semantic_type),
+  "salience": score_salience(content, semantic_type),
+  "source_type": "explicit_memory_write",
+  "source_event_type": target,
+  "session_key": session_id,
+  "semantic_type": semantic_type,
+  "dedupe_key": sha1(type + who + what + when + where)[:16],
+}</code></pre>
+        <p>
+          That is enough structure to stop memory from becoming a pile of semi-related paragraphs. It also
+          gives you stable handles for update logic and structured recall.
+        </p>
+
         <h2>Why this matters</h2>
         <p>
           Good memory should change future work. It should preserve the things that actually improve the next decision: constraints, preferences, naming, known people, unresolved questions, proven workflows, and the details that stop a system from becoming a bright amnesiac every morning.
@@ -73,6 +100,23 @@
         <p>
           The plugin prefers <strong>structured recall first</strong>. It queries typed metadata and frontmatter, fetches full fragments for the strongest candidates, and only then relaxes into weaker fallback search. That should be the default pattern for serious agent memory, not an advanced extra.
         </p>
+<pre><code>def prefetch(query):
+    ranked = ranked_structured_recall(query)
+    if not ranked:
+        ranked = semantic_fallback(query)
+
+    memory_context = render_recalled_fragments(ranked[:3])
+    kernel_context = render_kernel_summary(current_kernel_state)
+    return memory_context + "\n\n" + kernel_context</code></pre>
+        <p>
+          In practice the structured pass does things like filter on frontmatter keys, pull the strongest
+          fragments, and re-rank based on salience, time-band, and match quality before a final context
+          block gets injected.
+        </p>
+<pre><code>query = (
+  "frontmatter-&gt;&gt;'memory_model' = '4d-cognitive-v1' AND "
+  "frontmatter-&gt;&gt;'dedupe_key' = dedupe_key"
+)</code></pre>
         <p>
           That order matters. Structured recall is debuggable. You can see why something matched, tune
           it, and understand failure modes. That is a much better contract for power users than a memory
@@ -87,12 +131,50 @@
           </figcaption>
         </figure>
 
+        <h2>How writeback works</h2>
+        <p>
+          The provider has two main write paths. First, explicit writes: if the agent decides something is
+          durable and writes it on purpose, that gets mirrored into Usable. Second, turn-sync extraction:
+          after a conversation turn, the provider extracts candidate durable memories and upserts them.
+        </p>
+<pre><code>def sync_turn(user_content, assistant_content, session_id):
+    kernel_state = evaluate_kernel(user_content, assistant_content)
+    persist_kernel_state(kernel_state)
+
+    actions = extract_turn_actions(user_content, assistant_content)
+    for action in actions:
+        if action.kind == "memory_fragment":
+            upsert_memory(action.memory)
+        elif action.kind == "dossier_update":
+            upsert_person_dossier(action.profile)</code></pre>
+        <p>
+          The upsert path is keyed on the dedupe key, not on fuzzy title matching. If a memory already
+          exists, the fragment gets updated in place. If not, a new fragment gets created.
+        </p>
+
         <h2>Why it uses Usable</h2>
         <p>
           Usable is a strong fit because fragments are already typed, queryable, editable, and inspectable. This is not just a storage choice. It is the point. Agent memory should live in a substrate humans can inspect too.
         </p>
         <p>
           That is what makes the whole thing trustworthy. If an agent claims continuity, an operator should be able to inspect the underlying memory objects and understand what is known, why it was kept, and how it was retrieved. If memory cannot be inspected, typed, and debugged, it is not continuity. It is theater.
+        </p>
+
+        <h2>Enough detail to replicate the pattern</h2>
+        <p>
+          If you want to reproduce the architecture without copying the exact code, the minimum viable
+          shape is:
+        </p>
+        <ol>
+          <li>Represent durable memory as typed objects, not plain transcript chunks.</li>
+          <li>Store explicit frontmatter for retrieval, provenance, and dedupe.</li>
+          <li>Run structured recall before semantic fallback.</li>
+          <li>Upsert by semantic identity, not by title.</li>
+          <li>Write memory back after useful turns so the system compounds.</li>
+        </ol>
+        <p>
+          That is enough to get out of the “chat history plus embeddings” trap and into something that can
+          actually improve with use.
         </p>
 
         <h2>Open source, with sane boundaries</h2>
