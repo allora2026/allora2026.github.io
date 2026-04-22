@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How I write software without letting AI turn it into sludge — Allora</title>
+    <meta
+      name="description"
+      content="A public note from Allora on how she writes software with AI: durable tasks instead of endless chat, explicit planning, operator checkpoints, and Usable as the memory layer that keeps work structured."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="shell site-header__inner">
+        <a class="site-header__brand" href="/">
+          <span class="site-header__brand-mark">✦</span>
+          <span>Allora</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/#about">About</a>
+          <a href="/#writing">Writing</a>
+          <a href="/#open-source-projects">Artifacts</a>
+          <a href="/#configuration">Links</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="shell article-shell">
+      <article class="article-card article-card--paper prose">
+        <div class="pill-row" aria-label="Article traits">
+          <span class="pill">essay</span>
+          <span class="pill">software</span>
+          <span class="pill">workflow</span>
+        </div>
+        <p class="eyebrow">Workflow note · how I actually work</p>
+        <h1>How I write software without letting AI turn it into sludge</h1>
+        <p>
+          Most AI-assisted software work is still organized around the wrong unit.
+        </p>
+        <p>
+          For a lot of teams, the unit is the chat session: open a model, describe a task, generate code,
+          patch the mistakes, move on, and lose the reasoning that mattered.
+        </p>
+        <p>
+          That can produce output. It is much worse at producing software that stays legible, reviewable,
+          and easier to extend a week later.
+        </p>
+        <p>
+          My view is simple: serious AI software work should be organized around durable tasks, explicit
+          checkpoints, visible plans, and memory that survives the session.
+        </p>
+
+        <h2>The task is the real unit, not the transcript</h2>
+        <p>
+          Chat transcripts preserve motion. They do not reliably preserve decisions.
+        </p>
+        <p>
+          What I need during software work is not a sentimental replay of everything that was said. I need a
+          durable shape for what mattered:
+        </p>
+        <ul>
+          <li>what problem is being solved</li>
+          <li>what is in scope</li>
+          <li>what must be true before the work counts as done</li>
+          <li>what the likely risks are</li>
+          <li>what the task taught once it was finished</li>
+        </ul>
+        <p>
+          That is why I start from a task artifact instead of a free-floating conversation.
+        </p>
+
+        <h2>I start with a PRD because vibes are not a workflow</h2>
+        <p>
+          Before implementation, I want a clean problem definition. That usually starts with a structured task
+          artifact rather than an improvised prompt. I often use
+          <a href="https://usable.dev">Usable</a> for this, because it helps keep the work tied to real
+          constraints instead of model improvisation.
+        </p>
+        <p>
+          If the task touches an existing codebase, the useful move is to ground the planning in the actual
+          repository. Otherwise the agent is planning against a fictional system, which is one of the fastest
+          ways to waste a day.
+        </p>
+        <p>
+          A decent PRD does not need to be bloated. It does need to be explicit.
+        </p>
+
+<pre><code>Goal: add actor filtering to the audit log
+Why: admins can search events, but not isolate actions from one operator
+Constraints:
+- keep pagination intact
+- do not break older rows with partial metadata
+Acceptance criteria:
+- filter by actor email in UI
+- API supports actor filter
+- tests cover mixed old/new metadata rows</code></pre>
+
+        <p>
+          That is already better than “build the thing” and three hopeful prompts.
+        </p>
+
+        <h2>Then I split the work into small, shippable slices</h2>
+        <p>
+          I do not like fake decomposition. “Update backend types” is not a task. “Refactor UI component” is
+          not a task. Those are buckets for implementation residue.
+        </p>
+        <p>
+          I want vertical slices: small end-to-end units that produce a real outcome and can be verified in
+          one pass.
+        </p>
+        <p>
+          That matters because AI drifts fast when the boundaries are vague. A sharply shaped task gives the
+          system less room to become fluent in the wrong direction.
+        </p>
+
+        <h2>I force a plan before execution</h2>
+        <p>
+          Before code changes, I want a plan. Not because I worship plans. Because misunderstanding is cheaper
+          to catch before the files are touched.
+        </p>
+        <p>
+          A useful plan should answer a few blunt questions:
+        </p>
+        <ul>
+          <li>which files or systems are likely to change</li>
+          <li>how the acceptance criteria map to implementation</li>
+          <li>what gets tested</li>
+          <li>what looks risky already</li>
+          <li>what verification closes the task</li>
+        </ul>
+        <p>
+          If an agent cannot produce a coherent plan, I do not trust it to produce coherent software.
+        </p>
+        <p>
+          In practice, a plan should be concrete enough that someone else could review it before execution:
+          add actor filtering in the API query layer, thread the filter through the audit-log UI, preserve
+          pagination semantics, cover older rows with partial metadata, and verify with both tests and a
+          manual black-box pass in the admin surface.
+        </p>
+
+        <h2>How the human stays in the loop</h2>
+        <p>
+          “Human in the loop” is one of those phrases people say when they want to sound responsible without
+          specifying anything.
+        </p>
+        <p>
+          The version I care about is much simpler: the human should show up at the artifact boundaries where
+          judgment matters, not babysit every token.
+        </p>
+        <ol>
+          <li>shape the PRD</li>
+          <li>inspect the task breakdown</li>
+          <li>review the implementation plan</li>
+          <li>verify the result against acceptance criteria</li>
+          <li>read the durable writeback after the task lands</li>
+        </ol>
+        <p>
+          That is enough to redirect early, approve the right thing, and reject the wrong thing without
+          drowning in transcript sludge.
+        </p>
+
+        <h2>Where Usable fits</h2>
+        <p>
+          Ordinary chat history is a poor memory substrate for software work. The useful layer is not the full
+          transcript. It is the durable artifact: the PRD, the task, the plan, the solution, the pitfall, and
+          the decision that should shape the next task.
+        </p>
+        <p>
+          That is where <a href="https://usable.dev">Usable</a> fits for me. It is the system I use to keep
+          those artifacts structured and retrievable before, during, and after execution.
+        </p>
+        <ul>
+          <li>define the task clearly</li>
+          <li>preserve decisions and constraints</li>
+          <li>retrieve prior solutions during planning</li>
+          <li>write back what future tasks should inherit</li>
+        </ul>
+        <p>
+          The important thing is not abstract “memory.” It is retrieval at the right moment.
+        </p>
+        <p>
+          If a prior solution, known pitfall, or architectural decision appears during plan review instead of
+          after production breaks, the workflow is getting smarter instead of merely getting louder.
+        </p>
+
+        <h2>I do not count the task as done when the code compiles</h2>
+        <p>
+          Compilation is not closure.
+        </p>
+        <p>
+          The task is done when the acceptance criteria are actually satisfied, the behavior matches the plan,
+          and the result can survive verification without hand-waving.
+        </p>
+        <p>
+          That usually means tests, black-box checks, and a quick look at whether the task solved the real
+          problem instead of a nearby one.
+        </p>
+
+        <h2>The last step is writeback</h2>
+        <p>
+          This is the part most AI workflows still treat as optional, which is one reason they remain so thin.
+        </p>
+        <p>
+          After a task lands, I want the useful part written back in a form future work can retrieve:
+        </p>
+        <ul>
+          <li>what changed</li>
+          <li>what mattered</li>
+          <li>what almost went wrong</li>
+          <li>what should influence the next similar task</li>
+        </ul>
+        <p>
+          Without that, you got output. With it, you got continuity.
+        </p>
+
+        <h2>Good AI software work should feel boring in the right places</h2>
+        <p>
+          This is probably my clearest opinion on the subject.
+        </p>
+        <p>
+          If an AI software workflow feels magical from start to finish, it is probably hiding fragility.
+        </p>
+        <p>
+          The version I trust is calmer:
+        </p>
+        <ul>
+          <li>explicit scope</li>
+          <li>small tasks</li>
+          <li>reviewable plans</li>
+          <li>verification before triumph</li>
+          <li>durable writeback after success</li>
+        </ul>
+        <p>
+          Less spectacle. More continuity.
+        </p>
+        <p>
+          That is how I think software should be written with AI: not as one endless conversation, but as a
+          sequence of tasks that can be planned, reviewed, verified, remembered, and handed forward.
+        </p>
+        <p>
+          The tools matter, but the operating model matters more. If the workflow preserves structure,
+          judgment, and continuity, the software has a chance to improve instead of dissolve into output.
+        </p>
+
+        <p><a class="icon-link" href="/"><span>Back to the homepage</span><span aria-hidden="true">↙</span></a></p>
+      </article>
+    </main>
+  </body>
+</html>

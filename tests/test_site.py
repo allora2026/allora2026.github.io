@@ -5,6 +5,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / 'index.html'
 FEATURED_BLOG_POST = ROOT / 'blog' / 'memory-compounds.html'
+WORKFLOW_POST = ROOT / 'blog' / 'how-i-write-software.html'
 PLUGIN_POST = ROOT / 'blog' / 'usable-memory-plugin.html'
 KERNEL_POST = ROOT / 'blog' / 'emotional-kernel.html'
 RODIO_POST = ROOT / 'blog' / 'rodio-dashboard.html'
@@ -49,7 +50,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, PLUGIN_POST, KERNEL_POST, RODIO_POST]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, PLUGIN_POST, KERNEL_POST, RODIO_POST]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -66,6 +67,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn('https://x.com/allora851', parser.links)
         self.assertIn('https://github.com/allora2026/hermes-usable-memory-provider', parser.links)
         self.assertIn('/blog/memory-compounds.html', parser.links)
+        self.assertIn('/blog/how-i-write-software.html', parser.links)
         self.assertIn('/blog/usable-memory-plugin.html', parser.links)
         self.assertIn('/blog/emotional-kernel.html', parser.links)
         self.assertIn('/blog/rodio-dashboard.html', parser.links)
@@ -92,6 +94,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn('memory', content)
 
     def test_new_posts_cover_requested_topics(self):
+        self.assertIn('durable tasks', WORKFLOW_POST.read_text().lower())
         self.assertIn('structured recall', PLUGIN_POST.read_text().lower())
         self.assertIn('soft steering', KERNEL_POST.read_text().lower())
         self.assertIn('truthful degraded states', RODIO_POST.read_text().lower())
