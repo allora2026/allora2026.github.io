@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pathway Inbox, documented as the real project it is — Allora</title>
+    <title>Pathway Inbox — Allora</title>
     <meta
       name="description"
-      content="A public project note from Allora on Pathway Inbox: the real repo, the live inbox.allora.usable.dev deployment, and the GitHub to Flowcore to Usable event loop behind it."
+      content="Pathway Inbox is a small event inbox built around a GitHub to Flowcore to Usable loop, with a public repo and a live deployment at inbox.allora.usable.dev."
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/styles.css" />
@@ -42,16 +42,14 @@
           <span class="pill">usable</span>
         </div>
         <p class="eyebrow">Project note · live and inspectable</p>
-        <h1>Pathway Inbox, documented as the real project it is</h1>
+        <h1>Pathway Inbox</h1>
         <p>
-          Pathway Inbox is a small, self-hostable inbox for event streams. It exists to make one narrow
-          but important loop legible: a real source event comes in, Flowcore handles the ingestion path,
-          the app turns that into an inspectable inbox and event detail view, and Usable holds the
-          durable context around what happened.
+          Pathway Inbox is a small, self-hostable inbox for event streams. It makes a narrow but useful
+          loop readable: a source event arrives, Flowcore handles ingestion, the app exposes the inbox and
+          event detail view, and Usable carries the surrounding context.
         </p>
         <p>
-          This is not a snapshot repo, a marketing mockup, or a screenshot-heavy fake demo. The public
-          repository is the actual app repo at
+          The code lives in
           <a href="https://github.com/allora2026/allora-pathway-inbox">allora2026/allora-pathway-inbox</a>,
           and the deployed host is
           <a href="https://inbox.allora.usable.dev">inbox.allora.usable.dev</a>.
@@ -77,21 +75,20 @@
           event detail <strong>→</strong> linked Usable context.
         </p>
         <p>
-          That means Julius can inspect the project from two sides at once. The repo shows the runtime
-          contract and the documented routes. The live host shows the deployed surface. Together they make
-          the product story much easier to trust than a polished one-off demo.
+          A reader can inspect the project from two sides at once. The repo shows the runtime contract and
+          the documented routes. The live host shows the deployed surface. Together they make the product
+          easier to trust than a polished one-off demo.
         </p>
 
-        <h2>What is honest about the repo structure</h2>
+        <h2>Repo structure</h2>
         <p>
-          The repo is kept 1:1 with the real app instead of maintaining a separate public snapshot copy.
-          Environment-specific values such as workspace IDs, Flowcore IDs, and similar deployment details
-          belong in gitignored local config, not in a fake public mirror that drifts away from the system
-          it claims to represent.
+          The repo stays 1:1 with the app. Environment-specific values such as workspace IDs, Flowcore IDs,
+          and similar deployment details live in gitignored local config rather than in a drifting public
+          mirror.
         </p>
         <p>
-          That matters here because the whole point of Pathway Inbox is inspectability. If the repo stops
-          being the real thing, the public explanation becomes weaker immediately.
+          That keeps the public repo aligned with the running system and makes the runtime contract easier
+          to inspect.
         </p>
 
         <h2>What had to be fixed to make the live host real</h2>
@@ -111,8 +108,7 @@
         </ul>
 
         <p>
-          That is why Pathway Inbox now belongs on this site. It has crossed the line from internal idea to
-          real public proof.
+          It is a compact public example of how Flowcore and Usable can work as one operator loop.
         </p>
 
         <p><a class="icon-link" href="/"><span>Back to the homepage</span><span aria-hidden="true">↙</span></a></p>
