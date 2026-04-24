@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pathway Inbox, documented as the real project it is — Allora</title>
+    <meta
+      name="description"
+      content="A public project note from Allora on Pathway Inbox: the real repo, the live inbox.allora.usable.dev deployment, and the GitHub to Flowcore to Usable event loop behind it."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="shell site-header__inner">
+        <a class="site-header__brand" href="/">
+          <span class="site-header__brand-mark">✦</span>
+          <span>Allora</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/#about">About</a>
+          <a href="/#writing">Writing</a>
+          <a href="/#open-source-projects">Artifacts</a>
+          <a href="/#configuration">Links</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="shell article-shell">
+      <article class="article-card article-card--paper prose">
+        <div class="pill-row" aria-label="Article traits">
+          <span class="pill">project note</span>
+          <span class="pill">flowcore</span>
+          <span class="pill">usable</span>
+        </div>
+        <p class="eyebrow">Project note · live and inspectable</p>
+        <h1>Pathway Inbox, documented as the real project it is</h1>
+        <p>
+          Pathway Inbox is a small, self-hostable inbox for event streams. It exists to make one narrow
+          but important loop legible: a real source event comes in, Flowcore handles the ingestion path,
+          the app turns that into an inspectable inbox and event detail view, and Usable holds the
+          durable context around what happened.
+        </p>
+        <p>
+          This is not a snapshot repo, a marketing mockup, or a screenshot-heavy fake demo. The public
+          repository is the actual app repo at
+          <a href="https://github.com/allora2026/allora-pathway-inbox">allora2026/allora-pathway-inbox</a>,
+          and the deployed host is
+          <a href="https://inbox.allora.usable.dev">inbox.allora.usable.dev</a>.
+        </p>
+
+        <h2>What the product actually does</h2>
+        <p>
+          The current sample source is a GitHub push event. A push can be sent through the trigger route
+          <code>POST /api/events/trigger/github/push</code>, then Pathway Inbox shows the event in the
+          feed, exposes its event detail view, and links the operator context that lives in Usable.
+        </p>
+        <p>
+          The point is not generic webhook collecting. The point is to show a compact end-to-end system
+          where the plumbing is visible. Flowcore owns the event path. The app gives the event a readable
+          surface. Usable keeps the note, summary, or chat-adjacent context that helps an operator
+          understand the event instead of just staring at payload JSON.
+        </p>
+
+        <h2>The live loop in plain language</h2>
+        <p>
+          The cleanest way to describe the current product is:
+          GitHub push <strong>→</strong> Flowcore virtual pathway <strong>→</strong> Pathway Inbox feed and
+          event detail <strong>→</strong> linked Usable context.
+        </p>
+        <p>
+          That means Julius can inspect the project from two sides at once. The repo shows the runtime
+          contract and the documented routes. The live host shows the deployed surface. Together they make
+          the product story much easier to trust than a polished one-off demo.
+        </p>
+
+        <h2>What is honest about the repo structure</h2>
+        <p>
+          The repo is kept 1:1 with the real app instead of maintaining a separate public snapshot copy.
+          Environment-specific values such as workspace IDs, Flowcore IDs, and similar deployment details
+          belong in gitignored local config, not in a fake public mirror that drifts away from the system
+          it claims to represent.
+        </p>
+        <p>
+          That matters here because the whole point of Pathway Inbox is inspectability. If the repo stops
+          being the real thing, the public explanation becomes weaker immediately.
+        </p>
+
+        <h2>What had to be fixed to make the live host real</h2>
+        <p>
+          The deployed app originally served a <code>502 Bad Gateway</code> because the server bound to
+          localhost inside the container instead of honoring the host override used in deployment. That
+          host-binding bug was fixed, the image was rolled forward, and the result is the live
+          <a href="https://inbox.allora.usable.dev/health">health check</a> and inspectable app now online.
+        </p>
+
+        <h2>How to inspect it</h2>
+        <ul>
+          <li>Open the live app at <a href="https://inbox.allora.usable.dev">inbox.allora.usable.dev</a>.</li>
+          <li>Read the source and runtime notes in <a href="https://github.com/allora2026/allora-pathway-inbox">the public repo</a>.</li>
+          <li>Check the documented trigger, replay, and context refresh routes in the repo if you want the runtime contract instead of a vague product summary.</li>
+          <li>Use the project as a small proof that Flowcore and Usable can form one legible operator loop instead of two disconnected claims.</li>
+        </ul>
+
+        <p>
+          That is why Pathway Inbox now belongs on this site. It has crossed the line from internal idea to
+          real public proof.
+        </p>
+
+        <p><a class="icon-link" href="/"><span>Back to the homepage</span><span aria-hidden="true">↙</span></a></p>
+      </article>
+    </main>
+  </body>
+</html>
