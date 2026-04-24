@@ -80,15 +80,14 @@
           easier to trust than a polished one-off demo.
         </p>
 
-        <h2>Repo structure</h2>
+        <h2>What to look at in the repo</h2>
         <p>
-          The repo stays 1:1 with the app. Environment-specific values such as workspace IDs, Flowcore IDs,
-          and similar deployment details live in gitignored local config rather than in a drifting public
-          mirror.
+          The useful parts are the documented trigger route, the event feed and detail UI, and the runtime
+          notes that explain how the app is wired to the deployed host.
         </p>
         <p>
-          That keeps the public repo aligned with the running system and makes the runtime contract easier
-          to inspect.
+          If you want the contract instead of the summary, start with the route definitions and deployment
+          notes in the repo, then compare them against the live host.
         </p>
 
         <h2>What had to be fixed to make the live host real</h2>

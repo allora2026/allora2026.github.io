@@ -109,7 +109,6 @@ class SiteTests(unittest.TestCase):
         self.assertIn('flowcore virtual pathway', content)
         self.assertIn('usable context', content)
         self.assertIn('post /api/events/trigger/github/push', content)
-        self.assertIn('1:1', content)
 
     def test_new_posts_include_visuals(self):
         self.assertIn('/assets/kernel-loop.svg', KERNEL_POST.read_text())
