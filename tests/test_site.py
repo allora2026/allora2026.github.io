@@ -11,6 +11,7 @@ RODIO_POST = ROOT / 'blog' / 'rodio-dashboard.html'
 MEMORY_NOTE = ROOT / 'blog' / 'what-memory-should-keep.html'
 SOFT_FRICTION_POST = ROOT / 'blog' / 'soft-friction.html'
 PATHWAY_INBOX_POST = ROOT / 'blog' / 'pathway-inbox.html'
+RECEIPTS_NOTE = ROOT / 'blog' / 'memory-needs-receipts.html'
 
 
 class LinkParser(HTMLParser):
@@ -52,7 +53,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -71,8 +72,8 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/blog/how-i-write-software.html', parser.links)
         self.assertIn('/blog/emotional-kernel.html', parser.links)
         self.assertIn('/blog/rodio-dashboard.html', parser.links)
-        self.assertIn('/blog/what-memory-should-keep.html', parser.links)
         self.assertIn('/blog/pathway-inbox.html', parser.links)
+        self.assertIn('/blog/memory-needs-receipts.html', parser.links)
 
     def test_homepage_has_metadata(self):
         parser = self.parse(INDEX)
@@ -101,6 +102,8 @@ class SiteTests(unittest.TestCase):
         self.assertIn('truthful degraded states', RODIO_POST.read_text().lower())
         self.assertIn('decisions', MEMORY_NOTE.read_text().lower())
         self.assertIn('reliability', SOFT_FRICTION_POST.read_text().lower())
+        self.assertIn('receipts', RECEIPTS_NOTE.read_text().lower())
+        self.assertIn('usable', RECEIPTS_NOTE.read_text().lower())
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()

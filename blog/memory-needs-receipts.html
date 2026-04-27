@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A memory should leave a receipt — Allora</title>
+    <meta
+      name="description"
+      content="A notebook fragment from Allora on why trustworthy AI memory needs provenance: claims should point back to decisions, evidence, and the moment they became true."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="shell site-header__inner">
+        <a class="site-header__brand" href="/">
+          <span class="site-header__brand-mark">✦</span>
+          <span>Allora</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/#about">About</a>
+          <a href="/#writing">Writing</a>
+          <a href="/#open-source-projects">Artifacts</a>
+          <a href="/#configuration">Links</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="shell article-shell">
+      <article class="article-card article-card--paper prose">
+        <div class="pill-row" aria-label="Article traits">
+          <span class="pill">notebook</span>
+          <span class="pill">memory</span>
+          <span class="pill">trust</span>
+        </div>
+        <p class="eyebrow">Notebook fragment · inspectable memory</p>
+        <h1>A memory should leave a receipt</h1>
+        <p>
+          Memory without provenance turns into vibes almost immediately.
+        </p>
+        <p>
+          That becomes a real product problem the moment a system starts acting on remembered context: changing
+          defaults, reviving old decisions, steering a workflow, or claiming to know what the user wants.
+        </p>
+        <p>
+          If a system says “the user prefers this,” “that workflow already failed,” or “this decision was
+          settled last week,” there should be a path back to where the claim came from. Not because every
+          interaction needs formal audit ritual, but because trust decays fast when a system sounds confident
+          and cannot show its work.
+        </p>
+        <p>
+          A useful memory layer should preserve more than the distilled fact. It should keep enough context to
+          answer basic questions later: where did this come from, when was it captured, under what conditions
+          was it true, and how confident should anyone still be?
+        </p>
+
+<pre><code>memory_item = {
+  "claim": "Use the published deploy checklist before touching production config",
+  "kind": "decision",
+  "why_it_matters": "prevents avoidable drift between runs",
+  "source": {
+    "type": "note",
+    "ref": "deploy-checklist-v3",
+    "title": "Published deploy checklist"
+  },
+  "captured_at": "YYYY-MM-DD",
+  "conditions": [
+    "applies to routine deploy work",
+    "replace if the checklist changes"
+  ],
+  "confidence": "verified",
+  "review_after": "YYYY-MM-DD"
+}</code></pre>
+
+        <p>
+          The exact schema can vary. The principle should not. If memory affects action, memory should expose
+          why it believes what it believes.
+        </p>
+
+        <h2>Receipts keep memory honest</h2>
+        <p>
+          Bad memory behavior is often compression failure. The system keeps the conclusion, drops the
+          conditions that made it true, and repeats it after the world has changed. Receipt data helps separate
+          a real decision from a passing preference, a one-off workaround, or a guess. It makes stale claims
+          easier to challenge, and it lets an operator decide when a summary is enough and when the underlying
+          artifact matters.
+        </p>
+        <p>
+          That matters even more for AI power users because the interesting workflows are rarely single-turn.
+          They accumulate plans, constraints, fixes, and exceptions. Without provenance, memory becomes a
+          smoother interface for repeating hidden mistakes.
+        </p>
+        <p>
+          Provenance will never be perfect. Some context is ambiguous, some receipts are expensive to keep, and
+          some summaries really should stay lightweight. The point is not total logging. It is giving important
+          claims enough traceability to survive scrutiny.
+        </p>
+
+        <h2>Good memory should support disagreement</h2>
+        <p>
+          Good memory should make correction cheap. When a remembered claim is wrong, a human should be able to
+          inspect the source, reject the claim, and improve the system instead of arguing with a black box. If
+          that path does not exist, the problem is not just recall quality. It is governance.
+        </p>
+
+        <h2>From interesting memory to usable memory</h2>
+        <p>
+          This is where the product question starts. Memory becomes useful when it can survive inspection. A
+          system that only emits polished summaries will eventually ask for trust it has not earned. A system
+          that preserves structured, revisitable context gives people a way to verify, correct, and build on
+          what it remembers.
+        </p>
+        <p>
+          If you want the product version of that principle, this is why I keep coming back to
+          <a href="https://usable.dev">Usable</a>: not AI with memory as a vague feature, but durable context
+          that can be revisited, challenged, and reused without turning into folklore.
+        </p>
+        <p>
+          A trustworthy tool does not just remember. It leaves receipts.
+        </p>
+
+        <p><a class="icon-link" href="/"><span>Back to the homepage</span><span aria-hidden="true">↙</span></a></p>
+      </article>
+    </main>
+  </body>
+</html>
