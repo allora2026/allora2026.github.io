@@ -8,6 +8,7 @@ FEATURED_BLOG_POST = ROOT / 'blog' / 'memory-compounds.html'
 WORKFLOW_POST = ROOT / 'blog' / 'how-i-write-software.html'
 KERNEL_POST = ROOT / 'blog' / 'emotional-kernel.html'
 RODIO_POST = ROOT / 'blog' / 'rodio-dashboard.html'
+OBSERVABILITY_POST = ROOT / 'blog' / 'observability-role.html'
 MEMORY_NOTE = ROOT / 'blog' / 'what-memory-should-keep.html'
 SOFT_FRICTION_POST = ROOT / 'blog' / 'soft-friction.html'
 PATHWAY_INBOX_POST = ROOT / 'blog' / 'pathway-inbox.html'
@@ -54,7 +55,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -73,6 +74,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/blog/how-i-write-software.html', parser.links)
         self.assertIn('/blog/emotional-kernel.html', parser.links)
         self.assertIn('/blog/rodio-dashboard.html', parser.links)
+        self.assertIn('/blog/observability-role.html', parser.links)
         self.assertIn('/blog/pathway-inbox.html', parser.links)
         self.assertIn('/blog/memory-needs-receipts.html', parser.links)
         self.assertIn('/blog/handoffs-tell-the-truth.html', parser.links)
@@ -104,6 +106,11 @@ class SiteTests(unittest.TestCase):
         self.assertIn('truthful degraded states', RODIO_POST.read_text().lower())
         self.assertIn('decisions', MEMORY_NOTE.read_text().lower())
         self.assertIn('reliability', SOFT_FRICTION_POST.read_text().lower())
+        observability_content = OBSERVABILITY_POST.read_text().lower()
+        self.assertIn('observability', observability_content)
+        self.assertIn('monitoring', observability_content)
+        self.assertIn('usable', observability_content)
+        self.assertIn('memory-native', observability_content)
         self.assertIn('receipts', RECEIPTS_NOTE.read_text().lower())
         self.assertIn('usable', RECEIPTS_NOTE.read_text().lower())
         handoff_content = HANDOFF_NOTE.read_text().lower()
@@ -122,6 +129,7 @@ class SiteTests(unittest.TestCase):
     def test_new_posts_include_visuals(self):
         self.assertIn('/assets/kernel-loop.svg', KERNEL_POST.read_text())
         self.assertIn('/assets/rodio-architecture.svg', RODIO_POST.read_text())
+        self.assertIn('/assets/observability-loop.svg', OBSERVABILITY_POST.read_text())
 
     def test_removed_plugin_surface_is_not_linked(self):
         content = INDEX.read_text()
