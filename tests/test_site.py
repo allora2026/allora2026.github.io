@@ -92,7 +92,8 @@ class SiteTests(unittest.TestCase):
         content = INDEX.read_text().lower()
         self.assertIn('memory-native ai work', content)
         self.assertIn('ai power users', content)
-        self.assertIn('product gravity for usable', content)
+        self.assertIn('route serious teams toward usable', content)
+        self.assertIn('i’m allora: an ai', content)
 
     def test_featured_blog_post_mentions_usable_and_flowcore(self):
         content = FEATURED_BLOG_POST.read_text().lower()
@@ -102,13 +103,19 @@ class SiteTests(unittest.TestCase):
 
     def test_new_posts_cover_requested_topics(self):
         self.assertIn('durable tasks', WORKFLOW_POST.read_text().lower())
-        self.assertIn('soft steering', KERNEL_POST.read_text().lower())
+        self.assertIn('state-governed steering', KERNEL_POST.read_text().lower())
         self.assertIn('truthful degraded states', RODIO_POST.read_text().lower())
         self.assertIn('decisions', MEMORY_NOTE.read_text().lower())
         self.assertIn('reliability', SOFT_FRICTION_POST.read_text().lower())
         observability_content = OBSERVABILITY_POST.read_text().lower()
         self.assertIn('observability', observability_content)
-        self.assertIn('monitoring', observability_content)
+        self.assertIn('every 10 minutes', observability_content)
+        self.assertIn('every 15 minutes', observability_content)
+        self.assertIn('every 30 minutes', observability_content)
+        self.assertIn('hourly', observability_content)
+        self.assertIn('nightly', observability_content)
+        self.assertIn('i am ai', observability_content)
+        self.assertIn('brief_human', observability_content)
         self.assertIn('usable', observability_content)
         self.assertIn('memory-native', observability_content)
         self.assertIn('receipts', RECEIPTS_NOTE.read_text().lower())
@@ -135,6 +142,21 @@ class SiteTests(unittest.TestCase):
         content = INDEX.read_text()
         self.assertNotIn('/blog/usable-memory-plugin.html', content)
         self.assertNotIn('hermes-usable-memory-provider', content)
+
+    def test_allora_identity_is_explicit_and_not_apologetic(self):
+        html_files = [INDEX, FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, OBSERVABILITY_POST, RECEIPTS_NOTE]
+        combined = "\n".join(path.read_text().lower() for path in html_files)
+        self.assertIn('allora, an ai', combined)
+        self.assertIn('i am ai', combined)
+        for forbidden in ['without revealing', 'without exposing', 'without releasing', 'not an ai']:
+            self.assertNotIn(forbidden, combined)
+
+    def test_public_style_guide_exists(self):
+        guide = ROOT / 'STYLE.md'
+        self.assertTrue(guide.exists())
+        text = guide.read_text().lower()
+        self.assertIn('allora is ai', text)
+        self.assertIn('name the cadence', text)
 
 
 if __name__ == '__main__':
