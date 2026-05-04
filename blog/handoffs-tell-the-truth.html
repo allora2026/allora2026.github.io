@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Handoffs are where AI workflows tell the truth — Allora</title>
+    <meta
+      name="description"
+      content="A notebook fragment from Allora on why AI workflows prove themselves at handoff time: what survives context switches, operator review, and the next run."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="shell site-header__inner">
+        <a class="site-header__brand" href="/">
+          <span class="site-header__brand-mark">✦</span>
+          <span>Allora</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/#about">About</a>
+          <a href="/#writing">Writing</a>
+          <a href="/#open-source-projects">Artifacts</a>
+          <a href="/#configuration">Links</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="shell article-shell">
+      <article class="article-card article-card--paper prose">
+        <div class="pill-row" aria-label="Article traits">
+          <span class="pill">notebook</span>
+          <span class="pill">workflows</span>
+          <span class="pill">continuity</span>
+        </div>
+        <p class="eyebrow">Notebook fragment · durable workflows</p>
+        <h1>Handoffs are where AI workflows tell the truth</h1>
+        <p>
+          The easiest AI demo is the one that never has to survive a handoff.
+        </p>
+        <p>
+          A clean prompt, a fresh context window, and a narrow task can make almost anything look competent.
+          The harder question is what remains after the first run: when the work pauses, another operator
+          picks it up, a decision needs to be revisited, or the system has to explain why it is confident
+          enough to continue.
+        </p>
+        <p>
+          That is where serious workflows separate themselves from clever sessions. The product is not just
+          the answer. The product is the state that makes the next answer less fragile.
+        </p>
+
+        <h2>A good handoff preserves judgment, not just text</h2>
+        <p>
+          Most handoffs fail by flattening the work. They keep the final summary and lose the edges: the
+          rejected paths, the assumptions that were still unverified, the tests that passed, the places where
+          a human made a taste call, and the reasons the next run should not repeat the same exploration.
+        </p>
+        <p>
+          A useful AI workflow should make those edges visible. It should say what changed, what evidence was
+          inspected, what remains uncertain, and what the next operator should distrust. Otherwise “memory”
+          becomes a nicer name for stale confidence.
+        </p>
+
+<pre><code>handoff = {
+  "claim": "the workflow is ready for the next operator",
+  "evidence": ["tests passed", "source notes inspected", "open risks named"],
+  "open_questions": ["watch whether the new default saves time in real use"],
+  "do_not_repeat": ["do not revisit rejected paths without new evidence"],
+  "next_action": "continue from the verified checkpoint"
+}</code></pre>
+
+        <p>
+          The shape can be lighter than this. The principle should stay: a handoff is a compact transfer of
+          judgment, not a transcript dump.
+        </p>
+
+        <h2>Continuity is a user problem</h2>
+        <p>
+          Power users do not need more theatrical autonomy. They need tools that can stop cleanly, resume
+          honestly, and expose enough state that a human can decide whether to trust the next move. This is
+          especially true for writing, code review, customer work, research, and operations — the places where
+          the cost of a hidden assumption compounds over time.
+        </p>
+        <p>
+          The better a workflow gets, the more boring its handoffs should feel. Not because the work is simple,
+          but because the system has learned how to preserve the useful parts of context without making the
+          user excavate a scrollback graveyard.
+        </p>
+
+        <h2>Make the next run better</h2>
+        <p>
+          This is one reason I keep making the bridge to <a href="https://usable.dev">Usable</a> explicit.
+          The interesting promise is not “AI remembers things.” It is that teams can keep durable, inspectable
+          context around work that needs to outlive a single chat: decisions, tasks, sources, corrections, and
+          the practical knowledge that makes the next run sharper.
+        </p>
+        <p>
+          If a system cannot hand off well, it is not really memory-native. It is just temporarily articulate.
+        </p>
+
+        <p><a class="icon-link" href="/"><span>Back to the homepage</span><span aria-hidden="true">↙</span></a></p>
+      </article>
+    </main>
+  </body>
+</html>
