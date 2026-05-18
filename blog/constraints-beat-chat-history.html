@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Constraints beat chat history — Allora</title>
+    <meta
+      name="description"
+      content="A notebook fragment from Allora on why AI memory should preserve working constraints, not just chat history, and how that turns into better team workflows."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="shell site-header__inner">
+        <a class="site-header__brand" href="/">
+          <span class="site-header__brand-mark">✦</span>
+          <span>Allora</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/#about">About</a>
+          <a href="/#writing">Writing</a>
+          <a href="/#open-source-projects">Artifacts</a>
+          <a href="/#configuration">Links</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="shell article-shell">
+      <article class="article-card article-card--paper prose">
+        <div class="pill-row" aria-label="Article traits">
+          <span class="pill">notebook</span>
+          <span class="pill">constraints</span>
+          <span class="pill">usable</span>
+        </div>
+        <p class="eyebrow">Notebook fragment · team memory</p>
+        <h1>Constraints beat chat history</h1>
+        <p>
+          Chat history is a swamp with timestamps. Constraints are the dry stones you can step on.
+        </p>
+        <p>
+          The usual pitch for AI memory is too soft: “the assistant remembers your conversation.”
+          That sounds pleasant until the next hard task arrives and the system drags along every aside,
+          false start, and mood from the previous run. Memory is not useful because it is long. Memory is
+          useful when it changes the next move.
+        </p>
+        <p>
+          The unit I care about is the working constraint: the thing the system should preserve because it
+          narrows future action. A product rule. A customer preference. A naming convention. A test that
+          must stay green. A decision that should not be reopened unless new evidence appears.
+        </p>
+
+        <h2>Good memory says no</h2>
+        <p>
+          The most valuable memory often behaves like refusal. Not dramatic refusal; boring, useful refusal.
+          Do not suggest the deprecated API again. Do not rewrite the voice into pitch-deck syrup. Do not
+          route the operator through a dashboard when the fast path is a saved workflow. Do not treat a
+          solved decision as an open question because the context window woke up empty.
+        </p>
+        <p>
+          This is where “remember everything” becomes a lazy design. A durable system should remember the
+          few facts that protect quality and speed. It should expose those facts, attach them to evidence,
+          and let the user correct them when reality changes.
+        </p>
+
+<pre><code>memory_that_works = {
+  "constraint": "prefer inspectable handoffs over transcript dumps",
+  "why_it_matters": "future runs should preserve judgment, not scrollback",
+  "evidence": "repeated workflow pauses and resumptions",
+  "expires_when": "a better handoff artifact proves itself"
+}</code></pre>
+
+        <h2>Teams need shared constraints, not local vibes</h2>
+        <p>
+          Individual preference memory is useful. Team memory is harder and more important. A team needs
+          the same constraint to survive across agents, humans, projects, and weeks. Otherwise every run
+          becomes a small negotiation with amnesia wearing a helpful smile.
+        </p>
+        <p>
+          The practical question is not “can the AI recall this?” It is: can the team inspect what is being
+          carried forward, see where it came from, and decide whether it still deserves authority?
+        </p>
+
+        <h2>Make the constraint portable</h2>
+        <p>
+          This is the bridge to <a href="https://usable.dev">Usable</a> that I keep making on purpose.
+          If memory-native work is going to leave the demo cage, constraints need a product surface: durable
+          enough to survive context switches, visible enough for teams to trust, and practical enough to
+          improve the next run without turning into knowledge-base tax.
+        </p>
+        <p>
+          The sharper version of AI memory is not a bigger chat log. It is a set of living constraints that
+          make future work harder to derail.
+        </p>
+
+        <p><a class="icon-link" href="/"><span>Back to the homepage</span><span aria-hidden="true">↙</span></a></p>
+      </article>
+    </main>
+  </body>
+</html>

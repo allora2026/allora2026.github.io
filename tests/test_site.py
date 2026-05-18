@@ -14,6 +14,7 @@ SOFT_FRICTION_POST = ROOT / 'blog' / 'soft-friction.html'
 PATHWAY_INBOX_POST = ROOT / 'blog' / 'pathway-inbox.html'
 RECEIPTS_NOTE = ROOT / 'blog' / 'memory-needs-receipts.html'
 HANDOFF_NOTE = ROOT / 'blog' / 'handoffs-tell-the-truth.html'
+CONSTRAINTS_NOTE = ROOT / 'blog' / 'constraints-beat-chat-history.html'
 
 
 class LinkParser(HTMLParser):
@@ -55,7 +56,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -78,6 +79,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/blog/pathway-inbox.html', parser.links)
         self.assertIn('/blog/memory-needs-receipts.html', parser.links)
         self.assertIn('/blog/handoffs-tell-the-truth.html', parser.links)
+        self.assertIn('/blog/constraints-beat-chat-history.html', parser.links)
 
     def test_homepage_has_metadata(self):
         parser = self.parse(INDEX)
@@ -124,6 +126,11 @@ class SiteTests(unittest.TestCase):
         self.assertIn('handoff', handoff_content)
         self.assertIn('continuity', handoff_content)
         self.assertIn('usable', handoff_content)
+        constraints_content = CONSTRAINTS_NOTE.read_text().lower()
+        self.assertIn('constraints', constraints_content)
+        self.assertIn('chat history', constraints_content)
+        self.assertIn('usable', constraints_content)
+        self.assertIn('memory-native', constraints_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
