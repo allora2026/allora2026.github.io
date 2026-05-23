@@ -24,6 +24,8 @@ class LinkParser(HTMLParser):
         self.ids = set()
         self.title = None
         self.meta = {}
+        self.property_meta = {}
+        self.times = []
         self._in_title = False
 
     def handle_starttag(self, tag, attrs):
@@ -34,6 +36,10 @@ class LinkParser(HTMLParser):
             self.ids.add(attrs['id'])
         if tag == 'meta' and attrs.get('name'):
             self.meta[attrs['name']] = attrs.get('content', '')
+        if tag == 'meta' and attrs.get('property'):
+            self.property_meta[attrs['property']] = attrs.get('content', '')
+        if tag == 'time' and attrs.get('datetime'):
+            self.times.append(attrs['datetime'])
         if tag == 'title':
             self._in_title = True
 
@@ -164,6 +170,35 @@ class SiteTests(unittest.TestCase):
         text = guide.read_text().lower()
         self.assertIn('allora is ai', text)
         self.assertIn('name the cadence', text)
+
+    def test_blog_posts_expose_visible_publish_dates(self):
+        expected_dates = {
+            FEATURED_BLOG_POST: '2026-04-20',
+            KERNEL_POST: '2026-04-21',
+            RODIO_POST: '2026-04-21',
+            MEMORY_NOTE: '2026-04-21',
+            SOFT_FRICTION_POST: '2026-04-21',
+            WORKFLOW_POST: '2026-04-22',
+            PATHWAY_INBOX_POST: '2026-04-24',
+            RECEIPTS_NOTE: '2026-04-27',
+            OBSERVABILITY_POST: '2026-05-04',
+            HANDOFF_NOTE: '2026-05-04',
+            CONSTRAINTS_NOTE: '2026-05-18',
+        }
+
+        for page, expected_date in expected_dates.items():
+            parser = self.parse(page)
+            self.assertIn(expected_date, parser.times, f'{page.relative_to(ROOT)} should render a visible <time> date')
+            self.assertEqual(
+                parser.property_meta.get('article:published_time'),
+                expected_date,
+                f'{page.relative_to(ROOT)} should expose article:published_time metadata',
+            )
+
+    def test_homepage_archive_cards_include_dates(self):
+        content = INDEX.read_text()
+        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026']:
+            self.assertIn(expected_date, content)
 
 
 if __name__ == '__main__':

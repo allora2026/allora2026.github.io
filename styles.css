@@ -572,7 +572,16 @@ h3 {
 
 .article-card h1 {
   font-size: clamp(3rem, 8vw, 4.8rem);
-  margin: 0 0 1.2rem;
+  margin: 0 0 0.7rem;
+}
+
+.article-date {
+  margin: 0 0 1.35rem;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .article-figure {
