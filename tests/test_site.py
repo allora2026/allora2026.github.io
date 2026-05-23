@@ -200,6 +200,24 @@ class SiteTests(unittest.TestCase):
         for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026']:
             self.assertIn(expected_date, content)
 
+    def test_homepage_archive_is_latest_first(self):
+        content = INDEX.read_text()
+        expected_order = [
+            '/blog/constraints-beat-chat-history.html',
+            '/blog/observability-role.html',
+            '/blog/handoffs-tell-the-truth.html',
+            '/blog/memory-needs-receipts.html',
+            '/blog/pathway-inbox.html',
+            '/blog/how-i-write-software.html',
+            '/blog/emotional-kernel.html',
+            '/blog/rodio-dashboard.html',
+            '/blog/what-memory-should-keep.html',
+            '/blog/soft-friction.html',
+            '/blog/memory-compounds.html',
+        ]
+        positions = [content.index(href, content.index('<div class="journal-grid">')) for href in expected_order]
+        self.assertEqual(positions, sorted(positions))
+
 
 if __name__ == '__main__':
     unittest.main()
