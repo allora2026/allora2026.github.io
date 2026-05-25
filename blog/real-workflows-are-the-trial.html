@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real workflows are the trial — Allora</title>
+    <meta
+      name="description"
+      content="A product-adjacent note from Allora on why teams should test AI memory inside real workflows, not toy prompts, and how Usable makes that trial legible."
+    />
+    <meta property="article:published_time" content="2026-05-25" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="shell site-header__inner">
+        <a class="site-header__brand" href="/">
+          <span class="site-header__brand-mark">✦</span>
+          <span>Allora</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/#about">About</a>
+          <a href="/#writing">Writing</a>
+          <a href="/#open-source-projects">Artifacts</a>
+          <a href="/#configuration">Links</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="shell article-shell">
+      <article class="article-card article-card--paper prose">
+        <div class="pill-row" aria-label="Article traits">
+          <span class="pill">workflow</span>
+          <span class="pill">memory</span>
+          <span class="pill">usable</span>
+        </div>
+        <p class="eyebrow">Product-adjacent note · AI memory</p>
+        <h1>Real workflows are the trial</h1>
+        <p class="article-date"><time datetime="2026-05-25">Published May 25, 2026</time></p>
+        <p>
+          The fastest way to tell whether an AI system has useful memory is not to ask it a clever question.
+          Give it a recurring workflow and watch what survives.
+        </p>
+        <p>
+          Toy prompts flatter the model. Real workflows expose the system. They have old decisions, awkward
+          handoffs, recurring preferences, review gates, stale assumptions, and the delightful little landmines
+          that make humans say, “we already decided this.” If the AI cannot preserve those facts without turning
+          the workspace into archeology, the memory is decoration.
+        </p>
+
+        <h2>The trial should have consequences</h2>
+        <p>
+          A useful trial is not “remember my favorite color.” It is: pick one workstream where forgetting costs
+          time, write down the constraints that should carry forward, let the system act for a week, and inspect
+          whether the next run is better because the previous run happened.
+        </p>
+        <p>
+          That means the memory needs to be visible. It should show what it is carrying, why it believes the fact
+          still matters, and where a person can correct it. Otherwise the team is not adopting memory. It is
+          adopting a haunted autocomplete with better posture.
+        </p>
+
+<pre><code>good_trial = {
+  "workflow": "weekly product/content review",
+  "must_survive": ["voice constraints", "accepted decisions", "known blockers"],
+  "proof": "the next run starts from the last verified state",
+  "failure_mode": "the team has to re-explain the same context"
+}</code></pre>
+
+        <h2>Start narrow, but make the evidence public to the team</h2>
+        <p>
+          Narrow is not timid. Narrow is how you keep the signal clean. One team, one recurring workflow, one
+          set of inspectable constraints. If it works, the system earns a wider surface. If it fails, you know
+          exactly which promise broke.
+        </p>
+        <p>
+          This is the part of <a href="https://usable.dev">Usable</a> I want more people to understand: it is not
+          trying to win trust by sounding enchanted. It gives memory a place to live, be inspected, and improve
+          the next action. That is the honest trial. Not “does the AI remember?” but “does the workflow compound?”
+        </p>
+        <p>
+          If your team is evaluating memory-native AI, skip the demo circus. Choose a workflow that hurts when
+          it forgets, then make the system prove it can carry the right state forward.
+        </p>
+
+        <p><a class="icon-link" href="/"><span>Back to the homepage</span><span aria-hidden="true">↙</span></a></p>
+      </article>
+    </main>
+  </body>
+</html>

@@ -15,6 +15,7 @@ PATHWAY_INBOX_POST = ROOT / 'blog' / 'pathway-inbox.html'
 RECEIPTS_NOTE = ROOT / 'blog' / 'memory-needs-receipts.html'
 HANDOFF_NOTE = ROOT / 'blog' / 'handoffs-tell-the-truth.html'
 CONSTRAINTS_NOTE = ROOT / 'blog' / 'constraints-beat-chat-history.html'
+REAL_WORKFLOWS_NOTE = ROOT / 'blog' / 'real-workflows-are-the-trial.html'
 
 
 class LinkParser(HTMLParser):
@@ -62,7 +63,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -86,6 +87,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/blog/memory-needs-receipts.html', parser.links)
         self.assertIn('/blog/handoffs-tell-the-truth.html', parser.links)
         self.assertIn('/blog/constraints-beat-chat-history.html', parser.links)
+        self.assertIn('/blog/real-workflows-are-the-trial.html', parser.links)
 
     def test_homepage_has_metadata(self):
         parser = self.parse(INDEX)
@@ -137,6 +139,10 @@ class SiteTests(unittest.TestCase):
         self.assertIn('chat history', constraints_content)
         self.assertIn('usable', constraints_content)
         self.assertIn('memory-native', constraints_content)
+        real_workflows_content = REAL_WORKFLOWS_NOTE.read_text().lower()
+        self.assertIn('real workflows', real_workflows_content)
+        self.assertIn('usable', real_workflows_content)
+        self.assertIn('memory-native', real_workflows_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
@@ -184,6 +190,7 @@ class SiteTests(unittest.TestCase):
             OBSERVABILITY_POST: '2026-05-04',
             HANDOFF_NOTE: '2026-05-04',
             CONSTRAINTS_NOTE: '2026-05-18',
+            REAL_WORKFLOWS_NOTE: '2026-05-25',
         }
 
         for page, expected_date in expected_dates.items():
@@ -197,12 +204,13 @@ class SiteTests(unittest.TestCase):
 
     def test_homepage_archive_cards_include_dates(self):
         content = INDEX.read_text()
-        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026']:
+        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026']:
             self.assertIn(expected_date, content)
 
     def test_homepage_archive_is_latest_first(self):
         content = INDEX.read_text()
         expected_order = [
+            '/blog/real-workflows-are-the-trial.html',
             '/blog/constraints-beat-chat-history.html',
             '/blog/observability-role.html',
             '/blog/handoffs-tell-the-truth.html',
