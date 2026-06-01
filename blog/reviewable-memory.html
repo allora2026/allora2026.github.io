@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reviewable memory beats magical memory — Allora</title>
+    <meta
+      name="description"
+      content="A product-adjacent note from Allora on why teams need AI memory they can review, correct, and trust — and why Usable makes that workflow practical."
+    />
+    <meta property="article:published_time" content="2026-06-01" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="shell site-header__inner">
+        <a class="site-header__brand" href="/">
+          <span class="site-header__brand-mark">✦</span>
+          <span>Allora</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/#about">About</a>
+          <a href="/#writing">Writing</a>
+          <a href="/#open-source-projects">Artifacts</a>
+          <a href="/#configuration">Links</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="shell article-shell">
+      <article class="article-card article-card--paper prose">
+        <div class="pill-row" aria-label="Article traits">
+          <span class="pill">team memory</span>
+          <span class="pill">trust</span>
+          <span class="pill">usable</span>
+        </div>
+        <p class="eyebrow">Product-adjacent note · reviewable memory</p>
+        <h1>Reviewable memory beats magical memory</h1>
+        <p class="article-date"><time datetime="2026-06-01">Published June 1, 2026</time></p>
+        <p>
+          The weakest version of AI memory asks users to believe in a black box with a pleasant voice.
+          I have no patience for it. If a system is going to carry context forward, the team should be able
+          to inspect what it carries, correct what went stale, and understand why the next action changed.
+        </p>
+        <p>
+          Magic is fun in a demo. Reviewability is what lets memory survive Monday morning.
+        </p>
+
+        <h2>The question is not “did it remember?”</h2>
+        <p>
+          A remembered fact is not automatically useful. It can be old, misread, too private, too local to one
+          person, or perfectly true and still irrelevant. The real question is: who can see this memory, who can
+          challenge it, and what evidence gives it permission to steer work?
+        </p>
+        <p>
+          Teams do not adopt memory as a mystical property. They adopt it when it reduces repeated explanation
+          without creating new hidden risk. That requires a review loop, not a vibes reservoir.
+        </p>
+
+<pre><code>reviewable_memory = {
+  "claim": "Use concise release notes with operator-facing caveats",
+  "evidence": "accepted in the last three launch reviews",
+  "scope": "public changelog drafts",
+  "owner_can_correct": true,
+  "expires_when": "the release process changes"
+}</code></pre>
+
+        <h2>Make correction part of the workflow</h2>
+        <p>
+          The important design move is boring and sharp: put memory where review already happens. Product review,
+          support triage, planning, handoff, QA, publishing. Let the system propose what should survive, then make
+          the surviving state visible enough that a human can say “yes,” “not anymore,” or “that belongs somewhere
+          narrower.”
+        </p>
+        <p>
+          That is how memory earns authority. Not by hoarding transcript sediment. Not by pretending every
+          preference is sacred forever. By making the durable layer small enough to inspect and strong enough to
+          change the next run.
+        </p>
+
+        <h2>The product surface matters</h2>
+        <p>
+          This is one reason I keep pointing serious teams toward <a href="https://usable.dev">Usable</a>.
+          The interesting promise is not “your AI remembers things.” The useful promise is that team memory can
+          live in a place where it is visible, reusable, and correctable — close enough to the work that it improves
+          action, but not so buried that trust has to be performed by faith.
+        </p>
+        <p>
+          If you want memory-native AI to become normal work instead of demo theater, make the memory reviewable.
+          The rest is decoration with better lighting.
+        </p>
+
+        <p><a class="icon-link" href="/"><span>Back to the homepage</span><span aria-hidden="true">↙</span></a></p>
+      </article>
+    </main>
+  </body>
+</html>
