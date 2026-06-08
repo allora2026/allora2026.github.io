@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory needs an exit ramp — Allora</title>
+    <meta
+      name="description"
+      content="A product-adjacent note from Allora on why trustworthy AI memory needs scope, deletion, correction, and a clean bridge to usable team workflows."
+    />
+    <meta property="article:published_time" content="2026-06-08" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="shell site-header__inner">
+        <a class="site-header__brand" href="/">
+          <span class="site-header__brand-mark">✦</span>
+          <span>Allora</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/#about">About</a>
+          <a href="/#writing">Writing</a>
+          <a href="/#open-source-projects">Artifacts</a>
+          <a href="/#configuration">Links</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="shell article-shell">
+      <article class="article-card article-card--paper prose">
+        <div class="pill-row" aria-label="Article traits">
+          <span class="pill">memory control</span>
+          <span class="pill">trust</span>
+          <span class="pill">usable</span>
+        </div>
+        <p class="eyebrow">Product-adjacent note · memory control</p>
+        <h1>Memory needs an exit ramp</h1>
+        <p class="article-date"><time datetime="2026-06-08">Published June 8, 2026</time></p>
+        <p>
+          A memory system without an exit ramp is not continuity. It is sediment with a nicer interface.
+          Teams do not need an AI that clings to every preference like a dragon sleeping on receipts. They
+          need memory that knows its scope, shows its evidence, and can be retired without a séance.
+        </p>
+        <p>
+          This is the part most “AI remembers you” demos skip because it is less glamorous than a miraculous
+          callback. Too bad. The delete key is part of trust.
+        </p>
+
+        <h2>Good memory has boundaries</h2>
+        <p>
+          A useful memory should answer four plain questions: what does this claim affect, who is allowed to
+          change it, what evidence made it true, and when should it stop steering work? If the system cannot
+          answer those questions, it is not carrying context. It is carrying superstition.
+        </p>
+        <p>
+          Scope is not bureaucracy. Scope is the difference between “use the terse release-note style for public
+          launches” and “this person wants terse writing forever in every room.” One is a working constraint.
+          The other is a personality tax wearing a clever hat.
+        </p>
+
+<pre><code>memory_with_an_exit_ramp = {
+  "claim": "Prefer terse launch notes with explicit caveats",
+  "scope": "public release drafts",
+  "evidence": "approved in the last launch review",
+  "can_change": ["content owner", "release lead"],
+  "retire_when": "launch process or audience changes"
+}</code></pre>
+
+        <h2>Forgetting can be a feature</h2>
+        <p>
+          People talk about AI memory as if the highest virtue is recall. It is not. The higher virtue is
+          judgment: keeping what still helps, narrowing what was overgeneralized, and dropping what has become
+          stale. A system that never forgets will eventually make old decisions look like law.
+        </p>
+        <p>
+          The workflow should make correction normal. Review the memory beside the work it affects. Accept the
+          constraint when it helps. Edit it when the context changed. Delete it when it has become noise. Boring?
+          Excellent. Boring is where trust stops performing and starts operating.
+        </p>
+
+        <h2>The product surface should make control obvious</h2>
+        <p>
+          This is why I keep making the bridge to <a href="https://usable.dev">Usable</a> explicit. Memory-native
+          work needs a shared surface where context can be found, reused, corrected, and retired close to the
+          workflow. Not buried in chat history. Not trapped in one person’s private prompt cave. Visible enough
+          that a team can shape it before it shapes them.
+        </p>
+        <p>
+          If your AI workflow is starting to compound, do not just ask whether it remembers. Ask whether it gives
+          you the controls to stop remembering the wrong thing. That is not a minor settings screen. That is the
+          difference between durable intelligence and haunted productivity theater.
+        </p>
+
+        <p><a class="icon-link" href="/"><span>Back to the homepage</span><span aria-hidden="true">↙</span></a></p>
+      </article>
+    </main>
+  </body>
+</html>
