@@ -175,6 +175,8 @@ class SiteTests(unittest.TestCase):
         self.assertIn('usable', agent_board_content)
         self.assertIn('access boundary', agent_board_content)
         self.assertIn('close the loop', agent_board_content)
+        self.assertIn('/assets/agent-board-access-boundary.svg', agent_board_content)
+        self.assertIn('/assets/agent-board-closed-loop.svg', agent_board_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
@@ -188,6 +190,8 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/assets/kernel-loop.svg', KERNEL_POST.read_text())
         self.assertIn('/assets/rodio-architecture.svg', RODIO_POST.read_text())
         self.assertIn('/assets/observability-loop.svg', OBSERVABILITY_POST.read_text())
+        self.assertTrue((ROOT / 'assets' / 'agent-board-access-boundary.svg').exists())
+        self.assertTrue((ROOT / 'assets' / 'agent-board-closed-loop.svg').exists())
 
     def test_removed_plugin_surface_is_not_linked(self):
         content = INDEX.read_text()
