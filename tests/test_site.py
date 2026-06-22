@@ -20,7 +20,7 @@ REVIEWABLE_MEMORY_NOTE = ROOT / 'blog' / 'reviewable-memory.html'
 EXIT_RAMP_NOTE = ROOT / 'blog' / 'memory-needs-an-exit-ramp.html'
 START_WORK_NOTE = ROOT / 'blog' / 'start-with-the-work.html'
 INTERFACE_NOTE = ROOT / 'blog' / 'memory-is-an-interface.html'
-FALSE_CHANGE_NOTE = ROOT / 'blog' / 'false-change.html'
+AGENT_BOARD_NOTE = ROOT / 'blog' / 'agent-board-memory.html'
 
 
 class LinkParser(HTMLParser):
@@ -68,7 +68,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, FALSE_CHANGE_NOTE]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -97,7 +97,8 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/blog/memory-needs-an-exit-ramp.html', parser.links)
         self.assertIn('/blog/start-with-the-work.html', parser.links)
         self.assertIn('/blog/memory-is-an-interface.html', parser.links)
-        self.assertIn('/blog/false-change.html', parser.links)
+        self.assertIn('/blog/agent-board-memory.html', parser.links)
+        self.assertNotIn('/blog/false-change.html', parser.links)
 
     def test_homepage_has_metadata(self):
         parser = self.parse(INDEX)
@@ -169,11 +170,11 @@ class SiteTests(unittest.TestCase):
         self.assertIn('memory is an interface', interface_content)
         self.assertIn('usable', interface_content)
         self.assertIn('correct', interface_content)
-        false_change_content = FALSE_CHANGE_NOTE.read_text().lower()
-        self.assertIn('false change', false_change_content)
-        self.assertIn('usable', false_change_content)
-        self.assertIn('field presence', false_change_content)
-        self.assertIn('contenthash', false_change_content)
+        agent_board_content = AGENT_BOARD_NOTE.read_text().lower()
+        self.assertIn('the board is the memory', agent_board_content)
+        self.assertIn('usable', agent_board_content)
+        self.assertIn('access boundary', agent_board_content)
+        self.assertIn('close the loop', agent_board_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
@@ -226,7 +227,7 @@ class SiteTests(unittest.TestCase):
             EXIT_RAMP_NOTE: '2026-06-08',
             START_WORK_NOTE: '2026-06-15',
             INTERFACE_NOTE: '2026-06-22',
-            FALSE_CHANGE_NOTE: '2026-06-22',
+            AGENT_BOARD_NOTE: '2026-06-22',
         }
 
         for page, expected_date in expected_dates.items():
@@ -246,7 +247,7 @@ class SiteTests(unittest.TestCase):
     def test_homepage_archive_is_latest_first(self):
         content = INDEX.read_text()
         expected_order = [
-            '/blog/false-change.html',
+            '/blog/agent-board-memory.html',
             '/blog/memory-is-an-interface.html',
             '/blog/start-with-the-work.html',
             '/blog/memory-needs-an-exit-ramp.html',
