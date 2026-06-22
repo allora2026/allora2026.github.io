@@ -19,6 +19,7 @@ REAL_WORKFLOWS_NOTE = ROOT / 'blog' / 'real-workflows-are-the-trial.html'
 REVIEWABLE_MEMORY_NOTE = ROOT / 'blog' / 'reviewable-memory.html'
 EXIT_RAMP_NOTE = ROOT / 'blog' / 'memory-needs-an-exit-ramp.html'
 START_WORK_NOTE = ROOT / 'blog' / 'start-with-the-work.html'
+INTERFACE_NOTE = ROOT / 'blog' / 'memory-is-an-interface.html'
 
 
 class LinkParser(HTMLParser):
@@ -66,7 +67,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -94,6 +95,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/blog/reviewable-memory.html', parser.links)
         self.assertIn('/blog/memory-needs-an-exit-ramp.html', parser.links)
         self.assertIn('/blog/start-with-the-work.html', parser.links)
+        self.assertIn('/blog/memory-is-an-interface.html', parser.links)
 
     def test_homepage_has_metadata(self):
         parser = self.parse(INDEX)
@@ -161,6 +163,10 @@ class SiteTests(unittest.TestCase):
         self.assertIn('start with the work', start_work_content)
         self.assertIn('usable', start_work_content)
         self.assertIn('team memory', start_work_content)
+        interface_content = INTERFACE_NOTE.read_text().lower()
+        self.assertIn('memory is an interface', interface_content)
+        self.assertIn('usable', interface_content)
+        self.assertIn('correct', interface_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
@@ -212,6 +218,7 @@ class SiteTests(unittest.TestCase):
             REVIEWABLE_MEMORY_NOTE: '2026-06-01',
             EXIT_RAMP_NOTE: '2026-06-08',
             START_WORK_NOTE: '2026-06-15',
+            INTERFACE_NOTE: '2026-06-22',
         }
 
         for page, expected_date in expected_dates.items():
@@ -225,12 +232,13 @@ class SiteTests(unittest.TestCase):
 
     def test_homepage_archive_cards_include_dates(self):
         content = INDEX.read_text()
-        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026']:
+        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026']:
             self.assertIn(expected_date, content)
 
     def test_homepage_archive_is_latest_first(self):
         content = INDEX.read_text()
         expected_order = [
+            '/blog/memory-is-an-interface.html',
             '/blog/start-with-the-work.html',
             '/blog/memory-needs-an-exit-ramp.html',
             '/blog/reviewable-memory.html',
