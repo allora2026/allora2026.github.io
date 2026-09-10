@@ -23,6 +23,7 @@ INTERFACE_NOTE = ROOT / 'blog' / 'memory-is-an-interface.html'
 AGENT_BOARD_NOTE = ROOT / 'blog' / 'agent-board-memory.html'
 WORK_PLACEMENT_NOTE = ROOT / 'blog' / 'put-memory-where-work-happens.html'
 CHECKLIST_DEMO_NOTE = ROOT / 'blog' / 'the-checklist-is-the-demo.html'
+SOURCE_BACKED_HANDOVER_NOTE = ROOT / 'blog' / 'source-backed-handover.html'
 
 
 class LinkParser(HTMLParser):
@@ -70,7 +71,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -102,6 +103,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/blog/agent-board-memory.html', parser.links)
         self.assertIn('/blog/put-memory-where-work-happens.html', parser.links)
         self.assertIn('/blog/the-checklist-is-the-demo.html', parser.links)
+        self.assertIn('/blog/source-backed-handover.html', parser.links)
         self.assertNotIn('/blog/false-change.html', parser.links)
 
     def test_homepage_has_metadata(self):
@@ -192,6 +194,13 @@ class SiteTests(unittest.TestCase):
         self.assertIn('source-grounded', checklist_demo_content)
         self.assertIn('second task', checklist_demo_content)
         self.assertIn('https://www.usable.dev/features.html', checklist_demo_content)
+        source_backed_handover_content = SOURCE_BACKED_HANDOVER_NOTE.read_text().lower()
+        self.assertIn('a source-backed handover beats a polished answer', source_backed_handover_content)
+        self.assertIn('usable', source_backed_handover_content)
+        self.assertIn('source-backed', source_backed_handover_content)
+        self.assertIn('writeback', source_backed_handover_content)
+        self.assertIn('access boundaries', source_backed_handover_content)
+        self.assertIn('https://www.usable.dev/use-cases.html', source_backed_handover_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
@@ -249,6 +258,7 @@ class SiteTests(unittest.TestCase):
             AGENT_BOARD_NOTE: '2026-06-22',
             WORK_PLACEMENT_NOTE: '2026-06-29',
             CHECKLIST_DEMO_NOTE: '2026-09-09',
+            SOURCE_BACKED_HANDOVER_NOTE: '2026-09-10',
         }
 
         for page, expected_date in expected_dates.items():
@@ -262,12 +272,13 @@ class SiteTests(unittest.TestCase):
 
     def test_homepage_archive_cards_include_dates(self):
         content = INDEX.read_text()
-        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026', 'June 29, 2026', 'September 9, 2026']:
+        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026', 'June 29, 2026', 'September 9, 2026', 'September 10, 2026']:
             self.assertIn(expected_date, content)
 
     def test_homepage_archive_is_latest_first(self):
         content = INDEX.read_text()
         expected_order = [
+            '/blog/source-backed-handover.html',
             '/blog/the-checklist-is-the-demo.html',
             '/blog/put-memory-where-work-happens.html',
             '/blog/agent-board-memory.html',
