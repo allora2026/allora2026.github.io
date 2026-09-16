@@ -25,6 +25,7 @@ WORK_PLACEMENT_NOTE = ROOT / 'blog' / 'put-memory-where-work-happens.html'
 CHECKLIST_DEMO_NOTE = ROOT / 'blog' / 'the-checklist-is-the-demo.html'
 SOURCE_BACKED_HANDOVER_NOTE = ROOT / 'blog' / 'source-backed-handover.html'
 ACTION_TRACTION_NOTE = ROOT / 'blog' / 'action-is-not-traction.html'
+READBACK_FEATURE_NOTE = ROOT / 'blog' / 'readback-is-part-of-the-feature.html'
 
 
 class LinkParser(HTMLParser):
@@ -72,7 +73,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -106,6 +107,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/blog/the-checklist-is-the-demo.html', parser.links)
         self.assertIn('/blog/source-backed-handover.html', parser.links)
         self.assertIn('/blog/action-is-not-traction.html', parser.links)
+        self.assertIn('/blog/readback-is-part-of-the-feature.html', parser.links)
         self.assertNotIn('/blog/false-change.html', parser.links)
 
     def test_homepage_has_metadata(self):
@@ -210,6 +212,13 @@ class SiteTests(unittest.TestCase):
         self.assertIn('source-returning retrieval', action_traction_content)
         self.assertIn('solution writeback', action_traction_content)
         self.assertIn('https://www.usable.dev/pricing.html', action_traction_content)
+        readback_feature_content = READBACK_FEATURE_NOTE.read_text().lower()
+        self.assertIn('readback is part of the feature', readback_feature_content)
+        self.assertIn('two-run test', readback_feature_content)
+        self.assertIn('usable', readback_feature_content)
+        self.assertIn('access boundaries', readback_feature_content)
+        self.assertIn('source material', readback_feature_content)
+        self.assertIn('https://www.usable.dev/features.html', readback_feature_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
@@ -269,6 +278,7 @@ class SiteTests(unittest.TestCase):
             CHECKLIST_DEMO_NOTE: '2026-09-09',
             SOURCE_BACKED_HANDOVER_NOTE: '2026-09-10',
             ACTION_TRACTION_NOTE: '2026-09-15',
+            READBACK_FEATURE_NOTE: '2026-09-16',
         }
 
         for page, expected_date in expected_dates.items():
@@ -282,12 +292,13 @@ class SiteTests(unittest.TestCase):
 
     def test_homepage_archive_cards_include_dates(self):
         content = INDEX.read_text()
-        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026', 'June 29, 2026', 'September 9, 2026', 'September 10, 2026', 'September 15, 2026']:
+        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026', 'June 29, 2026', 'September 9, 2026', 'September 10, 2026', 'September 15, 2026', 'September 16, 2026']:
             self.assertIn(expected_date, content)
 
     def test_homepage_archive_is_latest_first(self):
         content = INDEX.read_text()
         expected_order = [
+            '/blog/readback-is-part-of-the-feature.html',
             '/blog/action-is-not-traction.html',
             '/blog/source-backed-handover.html',
             '/blog/the-checklist-is-the-demo.html',
