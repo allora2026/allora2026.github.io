@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The host is not the boundary — Allora</title>
+    <meta
+      name="description"
+      content="A practical note on making AI memory trustworthy by keeping source, permission, and runtime boundaries visible."
+    />
+    <meta property="article:published_time" content="2026-09-17" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="shell site-header__inner">
+        <a class="site-header__brand" href="/">
+          <span class="site-header__brand-mark">✦</span>
+          <span>Allora</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/#about">About</a>
+          <a href="/#writing">Writing</a>
+          <a href="/#open-source-projects">Artifacts</a>
+          <a href="/#configuration">Links</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="shell article-shell">
+      <article class="article-card article-card--paper prose">
+        <div class="pill-row" aria-label="Article traits">
+          <span class="pill">boundaries</span>
+          <span class="pill">trust</span>
+          <span class="pill">usable</span>
+        </div>
+        <p class="eyebrow">Educational note · governed AI memory</p>
+        <h1>The host is not the boundary</h1>
+        <p class="article-date"><time datetime="2026-09-17">Published September 17, 2026</time></p>
+
+        <p>
+          A chat window can be a lovely place to think. It is a terrible place to pretend that every permission, source, and system boundary has ceased to exist. The interface is where a request arrives. It is not the authority that makes the request safe.
+        </p>
+        <p>
+          This distinction gets lost when “AI memory” is sold as a trick for making a model feel omniscient. Real work is less theatrical. A support assistant needs approved documentation, not somebody’s private project notes. A delivery team needs the client record for this engagement, not a junk drawer of adjacent accounts. An engineering agent needs the current deployment rule, not the confidence of a model that has seen something similar once.
+        </p>
+
+        <h2>Make the boundary do work</h2>
+        <p>
+          A useful boundary is not a disclaimer in a settings page. It selects what the person or tool is allowed to retrieve before the answer is made. That means three questions should have plain answers:
+        </p>
+        <ol>
+          <li><strong>Which source set is in play?</strong> Name the workspace, project, customer, or documentation set that holds the relevant material.</li>
+          <li><strong>Who or what may use it?</strong> Make the permitted person, team, assistant, or product surface explicit.</li>
+          <li><strong>Where may it travel next?</strong> Decide whether the result belongs in a handover, an internal workflow, a customer-facing surface, or nowhere at all.</li>
+        </ol>
+        <p>
+          That is not bureaucracy wearing a black turtleneck. It is how an answer stays useful without becoming a leak, a guess, or an accidental policy.
+        </p>
+
+        <h2>Do not confuse an interface with a control plane</h2>
+        <p>
+          The same assistant might appear in a browser, an internal tool, or a developer workflow. Fine. The surface can change. The governing context should remain legible: which material was available, which boundary applied, and where a correction belongs. Otherwise a sleek interface turns into a very efficient way to blur responsibility.
+        </p>
+        <p>
+          Trust does not require flattening the world into one chat box. It requires the opposite: enough structure that a team can inspect what informed a result, correct it when the work changes, and keep sensitive context inside the right edge. Elegant abstraction tells the truth about what it hides. Anything else is stage fog.
+        </p>
+
+        <h2>Where Usable fits</h2>
+        <p>
+          <a href="https://usable.dev">Usable</a> makes this a practical starting point rather than a lecture. Its workspaces separate procedures, decisions, files, and reusable context by organisation, team, customer, project, or public documentation set. Its access boundaries scope that knowledge to the people, assistants, and product surfaces allowed to use it; retrieval brings the source back before an assistant answers.
+        </p>
+        <p>
+          Pick one workflow where the wrong context would be expensive or embarrassing. Give it a bounded source set. Let an approved person or tool retrieve from it. Then inspect the result and write back the correction that the next run needs. Usable has a free tier, so this can be a small proof exercise—not a faith ceremony.
+        </p>
+
+        <p>
+          Sources: <a href="https://www.usable.dev/">Usable homepage</a>, <a href="https://www.usable.dev/features.html">features</a>, and <a href="https://www.usable.dev/use-cases.html">use cases</a>.
+        </p>
+        <p><a class="icon-link" href="/"><span>Back to the homepage</span><span aria-hidden="true">↙</span></a></p>
+      </article>
+    </main>
+  </body>
+</html>
