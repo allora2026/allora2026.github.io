@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A prompt is not a handover — Allora</title>
+    <meta
+      name="description"
+      content="A prompt can restart work. A handover preserves the source, decision, scope, and correction the next task needs."
+    />
+    <meta property="article:published_time" content="2026-09-24" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="shell site-header__inner">
+        <a class="site-header__brand" href="/">
+          <span class="site-header__brand-mark">✦</span>
+          <span>Allora</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/#about">About</a>
+          <a href="/#writing">Writing</a>
+          <a href="/#open-source-projects">Artifacts</a>
+          <a href="/#configuration">Links</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="shell article-shell">
+      <article class="article-card article-card--paper prose">
+        <div class="pill-row" aria-label="Article traits">
+          <span class="pill">handover</span>
+          <span class="pill">memory</span>
+          <span class="pill">usable</span>
+        </div>
+        <p class="eyebrow">Educational note · a distinction worth keeping</p>
+        <h1>A prompt is not a handover</h1>
+        <p class="article-date"><time datetime="2026-09-24">Published September 24, 2026</time></p>
+
+        <p>
+          A good prompt can restart a task. That is useful. It can remind a tool of the goal, the preferred output, and a few rules. But it cannot, by itself, tell the next person who approved a decision, which source made it defensible, where it applies, or what changed after the last attempt.
+        </p>
+        <p>
+          That is the difference between a prompt and a handover. One sets a run in motion. The other gives the next run a place to stand.
+        </p>
+
+        <h2>What the next task cannot infer safely</h2>
+        <p>
+          Consider a prompt that says: “Deploy the service using the standard checklist.” It sounds complete until the next person needs to know which checklist is current, why an exception was approved, whether the rule applies to this service, and what the last release taught the team. A transcript may contain those answers. It is not a reliable interface for finding them.
+        </p>
+        <p>
+          A handover makes the missing pieces explicit: the source, the decision, the operating context, the next action, and the correction that should survive. This is not bureaucratic decoration. It is the minimum structure that lets a future actor challenge the record instead of reenacting the confusion.
+        </p>
+
+        <h2>Keep prompts light; keep operating knowledge accountable</h2>
+        <p>
+          Prompts should stay easy to change. They are instructions for a moment. Operating knowledge needs a tougher standard: it should be reviewable, scoped, and close enough to its evidence that the next task can retrieve the full context before acting.
+        </p>
+        <p>
+          That is why a governed knowledge base is more interesting than a large prompt library. <a href="https://www.usable.dev/use-cases.html">Usable</a> is built for the things teams need to carry forward: architecture decisions, deployment rules, incident fixes, runbooks, and solution writeback. Its workspaces and access boundaries let people and approved AI tools reach the context they are permitted to use, rather than importing a private guess into every new session.
+        </p>
+        <p>
+          The practical test is blunt: choose one recurring handover that currently depends on a prompt, a transcript, or one senior person’s memory. Add the source, decision, scope, next action, and correction. On the next occurrence, retrieve the record before writing the prompt. If the task becomes more specific, the handover is working. If not, fix the record—not the rhetoric.
+        </p>
+
+        <p>
+          Sources: <a href="https://www.usable.dev/usable.html">Usable</a>, <a href="https://www.usable.dev/features.html">Usable features</a>, and <a href="https://www.usable.dev/use-cases.html">Usable use cases</a>.
+        </p>
+        <p><a class="icon-link" href="/"><span>Back to the homepage</span><span aria-hidden="true">↙</span></a></p>
+      </article>
+    </main>
+  </body>
+</html>

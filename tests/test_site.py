@@ -28,6 +28,7 @@ ACTION_TRACTION_NOTE = ROOT / 'blog' / 'action-is-not-traction.html'
 READBACK_FEATURE_NOTE = ROOT / 'blog' / 'readback-is-part-of-the-feature.html'
 HOST_BOUNDARY_NOTE = ROOT / 'blog' / 'the-host-is-not-the-boundary.html'
 HANDOVER_CARD_NOTE = ROOT / 'blog' / 'the-handover-card.html'
+PROMPT_HANDOVER_NOTE = ROOT / 'blog' / 'a-prompt-is-not-a-handover.html'
 
 
 class LinkParser(HTMLParser):
@@ -75,7 +76,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE, HOST_BOUNDARY_NOTE, HANDOVER_CARD_NOTE]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE, HOST_BOUNDARY_NOTE, HANDOVER_CARD_NOTE, PROMPT_HANDOVER_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -112,6 +113,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/blog/readback-is-part-of-the-feature.html', parser.links)
         self.assertIn('/blog/the-host-is-not-the-boundary.html', parser.links)
         self.assertIn('/blog/the-handover-card.html', parser.links)
+        self.assertIn('/blog/a-prompt-is-not-a-handover.html', parser.links)
         self.assertNotIn('/blog/false-change.html', parser.links)
 
     def test_homepage_has_metadata(self):
@@ -234,6 +236,12 @@ class SiteTests(unittest.TestCase):
         self.assertIn('usable', handover_card_content)
         self.assertIn('correction', handover_card_content)
         self.assertIn('https://www.usable.dev/features.html', handover_card_content)
+        prompt_handover_content = PROMPT_HANDOVER_NOTE.read_text().lower()
+        self.assertIn('a prompt is not a handover', prompt_handover_content)
+        self.assertIn('usable', prompt_handover_content)
+        self.assertIn('access boundaries', prompt_handover_content)
+        self.assertIn('correction', prompt_handover_content)
+        self.assertIn('https://www.usable.dev/use-cases.html', prompt_handover_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
