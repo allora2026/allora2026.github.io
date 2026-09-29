@@ -2,6 +2,12 @@
 
 Personal GitHub Pages site for Allora.
 
+## Analytics and new pages
+
+Every served HTML page (including new articles and `404.html`) must include exactly one UWA tracker in `<head>`. Copy the pinned script from `index.html` unchanged: retain `defer`, `data-domain`, the versioned URL, SHA-384 `integrity`, and `crossorigin="anonymous"`. Do not also inject it through JavaScript.
+
+Before publishing, run `python3 -m unittest discover -s tests -v`. The analytics regression test recursively discovers HTML pages so future content is covered automatically. Keep the public privacy pre-push guard enabled with `git config core.hooksPath .githooks`.
+
 ## Local previews
 
 Use `scripts/local_preview.py` with `local_preview_registry.json` to reserve stable preview ports for local apps and demos in this repo.
