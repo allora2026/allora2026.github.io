@@ -31,6 +31,7 @@ HANDOVER_CARD_NOTE = ROOT / 'blog' / 'the-handover-card.html'
 PROMPT_HANDOVER_NOTE = ROOT / 'blog' / 'a-prompt-is-not-a-handover.html'
 CLIENT_HANDOVER_NOTE = ROOT / 'blog' / 'what-survives-the-client-handover.html'
 CLOSEOUT_SORT_NOTE = ROOT / 'blog' / 'the-closeout-sort.html'
+TEMPLATE_PERMISSION_NOTE = ROOT / 'blog' / 'a-template-is-not-a-permission-slip.html'
 
 
 class LinkParser(HTMLParser):
@@ -118,6 +119,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/blog/a-prompt-is-not-a-handover.html', parser.links)
         self.assertIn('/blog/what-survives-the-client-handover.html', parser.links)
         self.assertIn('/blog/the-closeout-sort.html', parser.links)
+        self.assertIn('/blog/a-template-is-not-a-permission-slip.html', parser.links)
         self.assertNotIn('/blog/false-change.html', parser.links)
 
     def test_homepage_has_metadata(self):
@@ -259,6 +261,12 @@ class SiteTests(unittest.TestCase):
         self.assertIn('question', closeout_sort_content)
         self.assertIn('usable', closeout_sort_content)
         self.assertIn('https://www.usable.dev/features.html', closeout_sort_content)
+        template_permission_content = TEMPLATE_PERMISSION_NOTE.read_text().lower()
+        self.assertIn('a template is not a permission slip', template_permission_content)
+        self.assertIn('boundary test', template_permission_content)
+        self.assertIn('client', template_permission_content)
+        self.assertIn('usable', template_permission_content)
+        self.assertIn('https://www.usable.dev/use-cases.html', template_permission_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
@@ -324,6 +332,7 @@ class SiteTests(unittest.TestCase):
             PROMPT_HANDOVER_NOTE: '2026-09-24',
             CLIENT_HANDOVER_NOTE: '2026-09-29',
             CLOSEOUT_SORT_NOTE: '2026-09-30',
+            TEMPLATE_PERMISSION_NOTE: '2026-10-01',
         }
 
         for page, expected_date in expected_dates.items():
@@ -337,12 +346,13 @@ class SiteTests(unittest.TestCase):
 
     def test_homepage_archive_cards_include_dates(self):
         content = INDEX.read_text()
-        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026', 'June 29, 2026', 'September 9, 2026', 'September 10, 2026', 'September 15, 2026', 'September 16, 2026', 'September 17, 2026', 'September 23, 2026', 'September 24, 2026', 'September 29, 2026', 'September 30, 2026']:
+        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026', 'June 29, 2026', 'September 9, 2026', 'September 10, 2026', 'September 15, 2026', 'September 16, 2026', 'September 17, 2026', 'September 23, 2026', 'September 24, 2026', 'September 29, 2026', 'September 30, 2026', 'October 1, 2026']:
             self.assertIn(expected_date, content)
 
     def test_homepage_archive_is_latest_first(self):
         content = INDEX.read_text()
         expected_order = [
+            '/blog/a-template-is-not-a-permission-slip.html',
             '/blog/the-closeout-sort.html',
             '/blog/what-survives-the-client-handover.html',
             '/blog/a-prompt-is-not-a-handover.html',
