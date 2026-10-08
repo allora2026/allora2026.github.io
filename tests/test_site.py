@@ -34,6 +34,7 @@ CLOSEOUT_SORT_NOTE = ROOT / 'blog' / 'the-closeout-sort.html'
 TEMPLATE_PERMISSION_NOTE = ROOT / 'blog' / 'a-template-is-not-a-permission-slip.html'
 ONBOARDING_ANSWER_NOTE = ROOT / 'blog' / 'the-onboarding-answer-is-not-the-asset.html'
 SECOND_USE_NOTE = ROOT / 'blog' / 'the-second-use-is-the-test.html'
+FAQ_FEEDBACK_LOOP_NOTE = ROOT / 'blog' / 'a-faq-is-not-a-feedback-loop.html'
 
 
 class LinkParser(HTMLParser):
@@ -81,7 +82,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE, HOST_BOUNDARY_NOTE, HANDOVER_CARD_NOTE, PROMPT_HANDOVER_NOTE, CLIENT_HANDOVER_NOTE, CLOSEOUT_SORT_NOTE, TEMPLATE_PERMISSION_NOTE, ONBOARDING_ANSWER_NOTE, SECOND_USE_NOTE]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE, HOST_BOUNDARY_NOTE, HANDOVER_CARD_NOTE, PROMPT_HANDOVER_NOTE, CLIENT_HANDOVER_NOTE, CLOSEOUT_SORT_NOTE, TEMPLATE_PERMISSION_NOTE, ONBOARDING_ANSWER_NOTE, SECOND_USE_NOTE, FAQ_FEEDBACK_LOOP_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -124,6 +125,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/blog/a-template-is-not-a-permission-slip.html', parser.links)
         self.assertIn('/blog/the-onboarding-answer-is-not-the-asset.html', parser.links)
         self.assertIn('/blog/the-second-use-is-the-test.html', parser.links)
+        self.assertIn('/blog/a-faq-is-not-a-feedback-loop.html', parser.links)
         self.assertNotIn('/blog/false-change.html', parser.links)
 
     def test_homepage_has_metadata(self):
@@ -282,6 +284,11 @@ class SiteTests(unittest.TestCase):
         self.assertIn('review receipt', second_use_content)
         self.assertIn('usable', second_use_content)
         self.assertIn('https://www.usable.dev/features.html', second_use_content)
+        faq_feedback_loop_content = FAQ_FEEDBACK_LOOP_NOTE.read_text().lower()
+        self.assertIn('a faq is not a feedback loop', faq_feedback_loop_content)
+        self.assertIn('correction path', faq_feedback_loop_content)
+        self.assertIn('usable', faq_feedback_loop_content)
+        self.assertIn('https://www.usable.dev/use-cases.html', faq_feedback_loop_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
@@ -350,6 +357,7 @@ class SiteTests(unittest.TestCase):
             TEMPLATE_PERMISSION_NOTE: '2026-10-01',
             ONBOARDING_ANSWER_NOTE: '2026-10-06',
             SECOND_USE_NOTE: '2026-10-07',
+            FAQ_FEEDBACK_LOOP_NOTE: '2026-10-08',
         }
 
         for page, expected_date in expected_dates.items():
@@ -363,12 +371,13 @@ class SiteTests(unittest.TestCase):
 
     def test_homepage_archive_cards_include_dates(self):
         content = INDEX.read_text()
-        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026', 'June 29, 2026', 'September 9, 2026', 'September 10, 2026', 'September 15, 2026', 'September 16, 2026', 'September 17, 2026', 'September 23, 2026', 'September 24, 2026', 'September 29, 2026', 'September 30, 2026', 'October 1, 2026', 'October 6, 2026', 'October 7, 2026']:
+        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026', 'June 29, 2026', 'September 9, 2026', 'September 10, 2026', 'September 15, 2026', 'September 16, 2026', 'September 17, 2026', 'September 23, 2026', 'September 24, 2026', 'September 29, 2026', 'September 30, 2026', 'October 1, 2026', 'October 6, 2026', 'October 7, 2026', 'October 8, 2026']:
             self.assertIn(expected_date, content)
 
     def test_homepage_archive_is_latest_first(self):
         content = INDEX.read_text()
         expected_order = [
+            '/blog/a-faq-is-not-a-feedback-loop.html',
             '/blog/the-second-use-is-the-test.html',
             '/blog/the-onboarding-answer-is-not-the-asset.html',
             '/blog/a-template-is-not-a-permission-slip.html',
