@@ -38,6 +38,7 @@ FAQ_FEEDBACK_LOOP_NOTE = ROOT / 'blog' / 'a-faq-is-not-a-feedback-loop.html'
 STANDARD_AVAILABLE_NOTE = ROOT / 'blog' / 'a-standard-is-not-available-just-because-it-exists.html'
 BEFORE_WORK_RECEIPT_NOTE = ROOT / 'blog' / 'the-before-work-receipt-is-a-question-not-a-form.html'
 RUNBOOK_WORKFLOW_NOTE = ROOT / 'blog' / 'the-runbook-is-not-the-workflow.html'
+SERVICE_GUIDANCE_NOTE = ROOT / 'blog' / 'a-guidance-page-is-not-a-service-workflow.html'
 
 
 class LinkParser(HTMLParser):
@@ -85,7 +86,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE, HOST_BOUNDARY_NOTE, HANDOVER_CARD_NOTE, PROMPT_HANDOVER_NOTE, CLIENT_HANDOVER_NOTE, CLOSEOUT_SORT_NOTE, TEMPLATE_PERMISSION_NOTE, ONBOARDING_ANSWER_NOTE, SECOND_USE_NOTE, FAQ_FEEDBACK_LOOP_NOTE, STANDARD_AVAILABLE_NOTE, BEFORE_WORK_RECEIPT_NOTE, RUNBOOK_WORKFLOW_NOTE]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE, HOST_BOUNDARY_NOTE, HANDOVER_CARD_NOTE, PROMPT_HANDOVER_NOTE, CLIENT_HANDOVER_NOTE, CLOSEOUT_SORT_NOTE, TEMPLATE_PERMISSION_NOTE, ONBOARDING_ANSWER_NOTE, SECOND_USE_NOTE, FAQ_FEEDBACK_LOOP_NOTE, STANDARD_AVAILABLE_NOTE, BEFORE_WORK_RECEIPT_NOTE, RUNBOOK_WORKFLOW_NOTE, SERVICE_GUIDANCE_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -314,6 +315,12 @@ class SiteTests(unittest.TestCase):
         self.assertIn('retrieve the relevant source', runbook_workflow_content)
         self.assertIn('solution writeback', runbook_workflow_content)
         self.assertIn('https://www.usable.dev/use-cases.html', runbook_workflow_content)
+        service_guidance_content = SERVICE_GUIDANCE_NOTE.read_text().lower()
+        self.assertIn('a guidance page is not a service workflow', service_guidance_content)
+        self.assertIn('service-guidance receipt', service_guidance_content)
+        self.assertIn('authoritative source and revision', service_guidance_content)
+        self.assertIn('applicable boundary', service_guidance_content)
+        self.assertIn('https://www.usable.dev/usable.html', service_guidance_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
@@ -386,6 +393,7 @@ class SiteTests(unittest.TestCase):
             STANDARD_AVAILABLE_NOTE: '2026-10-13',
             BEFORE_WORK_RECEIPT_NOTE: '2026-10-14',
             RUNBOOK_WORKFLOW_NOTE: '2026-10-15',
+            SERVICE_GUIDANCE_NOTE: '2026-10-20',
         }
 
         for page, expected_date in expected_dates.items():
@@ -399,12 +407,13 @@ class SiteTests(unittest.TestCase):
 
     def test_homepage_archive_cards_include_dates(self):
         content = INDEX.read_text()
-        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026', 'June 29, 2026', 'September 9, 2026', 'September 10, 2026', 'September 15, 2026', 'September 16, 2026', 'September 17, 2026', 'September 23, 2026', 'September 24, 2026', 'September 29, 2026', 'September 30, 2026', 'October 1, 2026', 'October 6, 2026', 'October 7, 2026', 'October 8, 2026', 'October 13, 2026', 'October 14, 2026', 'October 15, 2026']:
+        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026', 'June 29, 2026', 'September 9, 2026', 'September 10, 2026', 'September 15, 2026', 'September 16, 2026', 'September 17, 2026', 'September 23, 2026', 'September 24, 2026', 'September 29, 2026', 'September 30, 2026', 'October 1, 2026', 'October 6, 2026', 'October 7, 2026', 'October 8, 2026', 'October 13, 2026', 'October 14, 2026', 'October 15, 2026', 'October 20, 2026']:
             self.assertIn(expected_date, content)
 
     def test_homepage_archive_is_latest_first(self):
         content = INDEX.read_text()
         expected_order = [
+            '/blog/a-guidance-page-is-not-a-service-workflow.html',
             '/blog/the-runbook-is-not-the-workflow.html',
             '/blog/the-before-work-receipt-is-a-question-not-a-form.html',
             '/blog/a-standard-is-not-available-just-because-it-exists.html',
