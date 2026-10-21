@@ -39,6 +39,7 @@ STANDARD_AVAILABLE_NOTE = ROOT / 'blog' / 'a-standard-is-not-available-just-beca
 BEFORE_WORK_RECEIPT_NOTE = ROOT / 'blog' / 'the-before-work-receipt-is-a-question-not-a-form.html'
 RUNBOOK_WORKFLOW_NOTE = ROOT / 'blog' / 'the-runbook-is-not-the-workflow.html'
 SERVICE_GUIDANCE_NOTE = ROOT / 'blog' / 'a-guidance-page-is-not-a-service-workflow.html'
+SERVICE_GUIDANCE_RECEIPT_NOTE = ROOT / 'blog' / 'the-service-guidance-receipt-has-four-fields.html'
 
 
 class LinkParser(HTMLParser):
@@ -86,7 +87,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE, HOST_BOUNDARY_NOTE, HANDOVER_CARD_NOTE, PROMPT_HANDOVER_NOTE, CLIENT_HANDOVER_NOTE, CLOSEOUT_SORT_NOTE, TEMPLATE_PERMISSION_NOTE, ONBOARDING_ANSWER_NOTE, SECOND_USE_NOTE, FAQ_FEEDBACK_LOOP_NOTE, STANDARD_AVAILABLE_NOTE, BEFORE_WORK_RECEIPT_NOTE, RUNBOOK_WORKFLOW_NOTE, SERVICE_GUIDANCE_NOTE]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE, HOST_BOUNDARY_NOTE, HANDOVER_CARD_NOTE, PROMPT_HANDOVER_NOTE, CLIENT_HANDOVER_NOTE, CLOSEOUT_SORT_NOTE, TEMPLATE_PERMISSION_NOTE, ONBOARDING_ANSWER_NOTE, SECOND_USE_NOTE, FAQ_FEEDBACK_LOOP_NOTE, STANDARD_AVAILABLE_NOTE, BEFORE_WORK_RECEIPT_NOTE, RUNBOOK_WORKFLOW_NOTE, SERVICE_GUIDANCE_NOTE, SERVICE_GUIDANCE_RECEIPT_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -133,6 +134,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/blog/a-standard-is-not-available-just-because-it-exists.html', parser.links)
         self.assertIn('/blog/the-before-work-receipt-is-a-question-not-a-form.html', parser.links)
         self.assertIn('/blog/the-runbook-is-not-the-workflow.html', parser.links)
+        self.assertIn('/blog/the-service-guidance-receipt-has-four-fields.html', parser.links)
         self.assertNotIn('/blog/false-change.html', parser.links)
 
     def test_homepage_has_metadata(self):
@@ -321,6 +323,12 @@ class SiteTests(unittest.TestCase):
         self.assertIn('authoritative source and revision', service_guidance_content)
         self.assertIn('applicable boundary', service_guidance_content)
         self.assertIn('https://www.usable.dev/usable.html', service_guidance_content)
+        service_guidance_receipt_content = SERVICE_GUIDANCE_RECEIPT_NOTE.read_text().lower()
+        self.assertIn('the service-guidance receipt has four fields', service_guidance_receipt_content)
+        self.assertIn('which source and revision should govern it?', service_guidance_receipt_content)
+        self.assertIn('which boundary applies?', service_guidance_receipt_content)
+        self.assertIn('where does a reviewed clarification return?', service_guidance_receipt_content)
+        self.assertIn('https://www.usable.dev/features.html', service_guidance_receipt_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
@@ -394,6 +402,7 @@ class SiteTests(unittest.TestCase):
             BEFORE_WORK_RECEIPT_NOTE: '2026-10-14',
             RUNBOOK_WORKFLOW_NOTE: '2026-10-15',
             SERVICE_GUIDANCE_NOTE: '2026-10-20',
+            SERVICE_GUIDANCE_RECEIPT_NOTE: '2026-10-21',
         }
 
         for page, expected_date in expected_dates.items():
