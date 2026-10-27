@@ -41,6 +41,7 @@ RUNBOOK_WORKFLOW_NOTE = ROOT / 'blog' / 'the-runbook-is-not-the-workflow.html'
 SERVICE_GUIDANCE_NOTE = ROOT / 'blog' / 'a-guidance-page-is-not-a-service-workflow.html'
 SERVICE_GUIDANCE_RECEIPT_NOTE = ROOT / 'blog' / 'the-service-guidance-receipt-has-four-fields.html'
 CONSISTENCY_NOTE = ROOT / 'blog' / 'consistency-is-not-copied-wording.html'
+CLIENT_HANDOVER_RECEIPT_NOTE = ROOT / 'blog' / 'a-client-handover-is-a-memory-boundary.html'
 
 
 class LinkParser(HTMLParser):
@@ -88,7 +89,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE, HOST_BOUNDARY_NOTE, HANDOVER_CARD_NOTE, PROMPT_HANDOVER_NOTE, CLIENT_HANDOVER_NOTE, CLOSEOUT_SORT_NOTE, TEMPLATE_PERMISSION_NOTE, ONBOARDING_ANSWER_NOTE, SECOND_USE_NOTE, FAQ_FEEDBACK_LOOP_NOTE, STANDARD_AVAILABLE_NOTE, BEFORE_WORK_RECEIPT_NOTE, RUNBOOK_WORKFLOW_NOTE, SERVICE_GUIDANCE_NOTE, SERVICE_GUIDANCE_RECEIPT_NOTE, CONSISTENCY_NOTE]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE, HOST_BOUNDARY_NOTE, HANDOVER_CARD_NOTE, PROMPT_HANDOVER_NOTE, CLIENT_HANDOVER_NOTE, CLOSEOUT_SORT_NOTE, TEMPLATE_PERMISSION_NOTE, ONBOARDING_ANSWER_NOTE, SECOND_USE_NOTE, FAQ_FEEDBACK_LOOP_NOTE, STANDARD_AVAILABLE_NOTE, BEFORE_WORK_RECEIPT_NOTE, RUNBOOK_WORKFLOW_NOTE, SERVICE_GUIDANCE_NOTE, SERVICE_GUIDANCE_RECEIPT_NOTE, CONSISTENCY_NOTE, CLIENT_HANDOVER_RECEIPT_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -137,6 +138,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/blog/the-runbook-is-not-the-workflow.html', parser.links)
         self.assertIn('/blog/the-service-guidance-receipt-has-four-fields.html', parser.links)
         self.assertIn('/blog/consistency-is-not-copied-wording.html', parser.links)
+        self.assertIn('/blog/a-client-handover-is-a-memory-boundary.html', parser.links)
         self.assertNotIn('/blog/false-change.html', parser.links)
 
     def test_homepage_has_metadata(self):
@@ -337,6 +339,12 @@ class SiteTests(unittest.TestCase):
         self.assertIn('current source', consistency_content)
         self.assertIn('reviewed clarification', consistency_content)
         self.assertIn('https://www.usable.dev/use-cases.html', consistency_content)
+        handover_receipt_content = CLIENT_HANDOVER_RECEIPT_NOTE.read_text().lower()
+        self.assertIn('a client handover is a memory boundary', handover_receipt_content)
+        self.assertIn('the handover receipt has four fields', handover_receipt_content)
+        self.assertIn('reviewed lesson', handover_receipt_content)
+        self.assertIn('https://www.usable.dev/use-cases.html', handover_receipt_content)
+        self.assertIn('https://www.usable.dev/features.html', handover_receipt_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
@@ -412,6 +420,7 @@ class SiteTests(unittest.TestCase):
             SERVICE_GUIDANCE_NOTE: '2026-10-20',
             SERVICE_GUIDANCE_RECEIPT_NOTE: '2026-10-21',
             CONSISTENCY_NOTE: '2026-10-22',
+            CLIENT_HANDOVER_RECEIPT_NOTE: '2026-10-27',
         }
 
         for page, expected_date in expected_dates.items():
@@ -425,12 +434,13 @@ class SiteTests(unittest.TestCase):
 
     def test_homepage_archive_cards_include_dates(self):
         content = INDEX.read_text()
-        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026', 'June 29, 2026', 'September 9, 2026', 'September 10, 2026', 'September 15, 2026', 'September 16, 2026', 'September 17, 2026', 'September 23, 2026', 'September 24, 2026', 'September 29, 2026', 'September 30, 2026', 'October 1, 2026', 'October 6, 2026', 'October 7, 2026', 'October 8, 2026', 'October 13, 2026', 'October 14, 2026', 'October 15, 2026', 'October 20, 2026', 'October 21, 2026', 'October 22, 2026']:
+        for expected_date in ['April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026', 'June 29, 2026', 'September 9, 2026', 'September 10, 2026', 'September 15, 2026', 'September 16, 2026', 'September 17, 2026', 'September 23, 2026', 'September 24, 2026', 'September 29, 2026', 'September 30, 2026', 'October 1, 2026', 'October 6, 2026', 'October 7, 2026', 'October 8, 2026', 'October 13, 2026', 'October 14, 2026', 'October 15, 2026', 'October 20, 2026', 'October 21, 2026', 'October 22, 2026', 'October 27, 2026']:
             self.assertIn(expected_date, content)
 
     def test_homepage_archive_is_latest_first(self):
         content = INDEX.read_text()
         expected_order = [
+            '/blog/a-client-handover-is-a-memory-boundary.html',
             '/blog/consistency-is-not-copied-wording.html',
             '/blog/the-service-guidance-receipt-has-four-fields.html',
             '/blog/a-guidance-page-is-not-a-service-workflow.html',
