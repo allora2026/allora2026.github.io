@@ -43,6 +43,7 @@ SERVICE_GUIDANCE_RECEIPT_NOTE = ROOT / 'blog' / 'the-service-guidance-receipt-ha
 CONSISTENCY_NOTE = ROOT / 'blog' / 'consistency-is-not-copied-wording.html'
 CLIENT_HANDOVER_RECEIPT_NOTE = ROOT / 'blog' / 'a-client-handover-is-a-memory-boundary.html'
 HANDOVER_RETRIEVAL_TEST_NOTE = ROOT / 'blog' / 'a-handover-receipt-is-a-retrieval-test.html'
+REUSABLE_CLIENT_KNOWLEDGE_NOTE = ROOT / 'blog' / 'reusable-client-knowledge-is-not-reusable-by-default.html'
 
 
 class LinkParser(HTMLParser):
@@ -90,7 +91,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE, HOST_BOUNDARY_NOTE, HANDOVER_CARD_NOTE, PROMPT_HANDOVER_NOTE, CLIENT_HANDOVER_NOTE, CLOSEOUT_SORT_NOTE, TEMPLATE_PERMISSION_NOTE, ONBOARDING_ANSWER_NOTE, SECOND_USE_NOTE, FAQ_FEEDBACK_LOOP_NOTE, STANDARD_AVAILABLE_NOTE, BEFORE_WORK_RECEIPT_NOTE, RUNBOOK_WORKFLOW_NOTE, SERVICE_GUIDANCE_NOTE, SERVICE_GUIDANCE_RECEIPT_NOTE, CONSISTENCY_NOTE, CLIENT_HANDOVER_RECEIPT_NOTE, HANDOVER_RETRIEVAL_TEST_NOTE]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE, HOST_BOUNDARY_NOTE, HANDOVER_CARD_NOTE, PROMPT_HANDOVER_NOTE, CLIENT_HANDOVER_NOTE, CLOSEOUT_SORT_NOTE, TEMPLATE_PERMISSION_NOTE, ONBOARDING_ANSWER_NOTE, SECOND_USE_NOTE, FAQ_FEEDBACK_LOOP_NOTE, STANDARD_AVAILABLE_NOTE, BEFORE_WORK_RECEIPT_NOTE, RUNBOOK_WORKFLOW_NOTE, SERVICE_GUIDANCE_NOTE, SERVICE_GUIDANCE_RECEIPT_NOTE, CONSISTENCY_NOTE, CLIENT_HANDOVER_RECEIPT_NOTE, HANDOVER_RETRIEVAL_TEST_NOTE, REUSABLE_CLIENT_KNOWLEDGE_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -141,6 +142,7 @@ class SiteTests(unittest.TestCase):
         self.assertIn('/blog/consistency-is-not-copied-wording.html', parser.links)
         self.assertIn('/blog/a-client-handover-is-a-memory-boundary.html', parser.links)
         self.assertIn('/blog/a-handover-receipt-is-a-retrieval-test.html', parser.links)
+        self.assertIn('/blog/reusable-client-knowledge-is-not-reusable-by-default.html', parser.links)
         self.assertNotIn('/blog/false-change.html', parser.links)
 
     def test_homepage_has_metadata(self):
@@ -353,6 +355,12 @@ class SiteTests(unittest.TestCase):
         self.assertIn('access boundaries', handover_retrieval_content)
         self.assertIn('solution writeback', handover_retrieval_content)
         self.assertIn('https://www.usable.dev/features.html', handover_retrieval_content)
+        reusable_client_knowledge_content = REUSABLE_CLIENT_KNOWLEDGE_NOTE.read_text().lower()
+        self.assertIn('reusable client knowledge is not reusable by default', reusable_client_knowledge_content)
+        self.assertIn('client-specific context', reusable_client_knowledge_content)
+        self.assertIn('delivery lesson', reusable_client_knowledge_content)
+        self.assertIn('usable', reusable_client_knowledge_content)
+        self.assertIn('https://www.usable.dev/usable.html', reusable_client_knowledge_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
