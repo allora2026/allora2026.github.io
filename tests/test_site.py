@@ -49,6 +49,7 @@ THREE_QUESTIONS_ONBOARDING_NOTE = ROOT / 'blog' / 'three-questions-before-you-ca
 NARRATOR_ONBOARDING_NOTE = ROOT / 'blog' / 'if-onboarding-needs-a-narrator-the-memory-is-not-ready.html'
 RUNBOOK_PREWORK_NOTE = ROOT / 'blog' / 'a-runbook-is-not-enough-before-work-starts.html'
 AI_TECHNICAL_RETRIEVAL_NOTE = ROOT / 'blog' / 'three-things-to-retrieve-before-ai-touches-a-technical-task.html'
+INCIDENT_EXCEPTION_NOTE = ROOT / 'blog' / 'if-the-exception-only-lives-in-the-incident-channel-it-is-not-a-standard.html'
 
 
 class LinkParser(HTMLParser):
@@ -96,7 +97,7 @@ class SiteTests(unittest.TestCase):
         self.assertTrue(INDEX.exists(), 'index.html should exist')
 
     def test_expected_blog_posts_exist(self):
-        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE, HOST_BOUNDARY_NOTE, HANDOVER_CARD_NOTE, PROMPT_HANDOVER_NOTE, CLIENT_HANDOVER_NOTE, CLOSEOUT_SORT_NOTE, TEMPLATE_PERMISSION_NOTE, ONBOARDING_ANSWER_NOTE, SECOND_USE_NOTE, FAQ_FEEDBACK_LOOP_NOTE, STANDARD_AVAILABLE_NOTE, BEFORE_WORK_RECEIPT_NOTE, RUNBOOK_WORKFLOW_NOTE, SERVICE_GUIDANCE_NOTE, SERVICE_GUIDANCE_RECEIPT_NOTE, CONSISTENCY_NOTE, CLIENT_HANDOVER_RECEIPT_NOTE, HANDOVER_RETRIEVAL_TEST_NOTE, REUSABLE_CLIENT_KNOWLEDGE_NOTE, FIRST_REAL_TASK_NOTE, THREE_QUESTIONS_ONBOARDING_NOTE, NARRATOR_ONBOARDING_NOTE, RUNBOOK_PREWORK_NOTE, AI_TECHNICAL_RETRIEVAL_NOTE]:
+        for page in [FEATURED_BLOG_POST, WORKFLOW_POST, KERNEL_POST, RODIO_POST, OBSERVABILITY_POST, MEMORY_NOTE, SOFT_FRICTION_POST, PATHWAY_INBOX_POST, RECEIPTS_NOTE, HANDOFF_NOTE, CONSTRAINTS_NOTE, REAL_WORKFLOWS_NOTE, REVIEWABLE_MEMORY_NOTE, EXIT_RAMP_NOTE, START_WORK_NOTE, INTERFACE_NOTE, AGENT_BOARD_NOTE, WORK_PLACEMENT_NOTE, CHECKLIST_DEMO_NOTE, SOURCE_BACKED_HANDOVER_NOTE, ACTION_TRACTION_NOTE, READBACK_FEATURE_NOTE, HOST_BOUNDARY_NOTE, HANDOVER_CARD_NOTE, PROMPT_HANDOVER_NOTE, CLIENT_HANDOVER_NOTE, CLOSEOUT_SORT_NOTE, TEMPLATE_PERMISSION_NOTE, ONBOARDING_ANSWER_NOTE, SECOND_USE_NOTE, FAQ_FEEDBACK_LOOP_NOTE, STANDARD_AVAILABLE_NOTE, BEFORE_WORK_RECEIPT_NOTE, RUNBOOK_WORKFLOW_NOTE, SERVICE_GUIDANCE_NOTE, SERVICE_GUIDANCE_RECEIPT_NOTE, CONSISTENCY_NOTE, CLIENT_HANDOVER_RECEIPT_NOTE, HANDOVER_RETRIEVAL_TEST_NOTE, REUSABLE_CLIENT_KNOWLEDGE_NOTE, FIRST_REAL_TASK_NOTE, THREE_QUESTIONS_ONBOARDING_NOTE, NARRATOR_ONBOARDING_NOTE, RUNBOOK_PREWORK_NOTE, AI_TECHNICAL_RETRIEVAL_NOTE, INCIDENT_EXCEPTION_NOTE]:
             self.assertTrue(page.exists(), f'{page.relative_to(ROOT)} should exist')
 
     def test_homepage_has_required_sections(self):
@@ -402,6 +403,12 @@ class SiteTests(unittest.TestCase):
         self.assertIn('approved return path', ai_technical_retrieval_content)
         self.assertIn('solution writeback', ai_technical_retrieval_content)
         self.assertIn('https://www.usable.dev/features.html', ai_technical_retrieval_content)
+        incident_exception_content = INCIDENT_EXCEPTION_NOTE.read_text().lower()
+        self.assertIn('if the exception only lives in the incident channel, it is not a standard', incident_exception_content)
+        self.assertIn('what changed?', incident_exception_content)
+        self.assertIn('where does it apply?', incident_exception_content)
+        self.assertIn('source-returning search', incident_exception_content)
+        self.assertIn('https://www.usable.dev/', incident_exception_content)
 
     def test_pathway_inbox_post_stays_grounded_in_real_runtime(self):
         content = PATHWAY_INBOX_POST.read_text().lower()
@@ -484,6 +491,7 @@ class SiteTests(unittest.TestCase):
             NARRATOR_ONBOARDING_NOTE: '2026-11-05',
             RUNBOOK_PREWORK_NOTE: '2026-11-10',
             AI_TECHNICAL_RETRIEVAL_NOTE: '2026-11-11',
+            INCIDENT_EXCEPTION_NOTE: '2026-11-12',
         }
 
         for page, expected_date in expected_dates.items():
@@ -497,12 +505,13 @@ class SiteTests(unittest.TestCase):
 
     def test_homepage_archive_cards_include_dates(self):
         content = INDEX.read_text()
-        for expected_date in ['November 11, 2026', 'November 10, 2026', 'November 5, 2026', 'November 4, 2026', 'November 3, 2026', 'April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026', 'June 29, 2026', 'September 9, 2026', 'September 10, 2026', 'September 15, 2026', 'September 16, 2026', 'September 17, 2026', 'September 23, 2026', 'September 24, 2026', 'September 29, 2026', 'September 30, 2026', 'October 1, 2026', 'October 6, 2026', 'October 7, 2026', 'October 8, 2026', 'October 13, 2026', 'October 14, 2026', 'October 15, 2026', 'October 20, 2026', 'October 21, 2026', 'October 22, 2026', 'October 27, 2026', 'October 28, 2026']:
+        for expected_date in ['November 12, 2026', 'November 11, 2026', 'November 10, 2026', 'November 5, 2026', 'November 4, 2026', 'November 3, 2026', 'April 20, 2026', 'April 21, 2026', 'April 22, 2026', 'April 24, 2026', 'April 27, 2026', 'May 4, 2026', 'May 18, 2026', 'May 25, 2026', 'June 1, 2026', 'June 8, 2026', 'June 15, 2026', 'June 22, 2026', 'June 29, 2026', 'September 9, 2026', 'September 10, 2026', 'September 15, 2026', 'September 16, 2026', 'September 17, 2026', 'September 23, 2026', 'September 24, 2026', 'September 29, 2026', 'September 30, 2026', 'October 1, 2026', 'October 6, 2026', 'October 7, 2026', 'October 8, 2026', 'October 13, 2026', 'October 14, 2026', 'October 15, 2026', 'October 20, 2026', 'October 21, 2026', 'October 22, 2026', 'October 27, 2026', 'October 28, 2026']:
             self.assertIn(expected_date, content)
 
     def test_homepage_archive_is_latest_first(self):
         content = INDEX.read_text()
         expected_order = [
+            '/blog/if-the-exception-only-lives-in-the-incident-channel-it-is-not-a-standard.html',
             '/blog/three-things-to-retrieve-before-ai-touches-a-technical-task.html',
             '/blog/a-runbook-is-not-enough-before-work-starts.html',
             '/blog/if-onboarding-needs-a-narrator-the-memory-is-not-ready.html',
